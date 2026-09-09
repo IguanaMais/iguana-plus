@@ -262,7 +262,7 @@
           "</a>" +
 
           "</div>" +
-          "</article>";
+          "</article>"
       })
       .join("");
   }
