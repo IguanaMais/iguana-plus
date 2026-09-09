@@ -249,17 +249,49 @@
         return;
       }
 
-      // Sem backend configurado ainda.
-      // Para conectar: substitua o bloco abaixo por uma chamada fetch()
-      // para sua API, serviço de formulário (ex.: Formspree) ou backend próprio.
-      var data = new FormData(form);
-      console.log("Formulário pronto para envio:", Object.fromEntries(data.entries()));
+var data = new FormData(form);
 
+// Chave do Web3Forms
+data.append("access_key", "7af392f3-6fda-4b4b-815b-b3d239cba9e5");
+
+// Assunto do e-mail recebido
+data.append("subject", "Novo Lead - Iguana+");
+
+// Nome do remetente exibido no e-mail
+data.append("from_name", "Site Iguana+");
+
+statusEl.textContent = "Enviando...";
+statusEl.classList.add("visible", "success");
+
+fetch("https://api.web3forms.com/submit", {
+  method: "POST",
+  body: data
+})
+  .then(function (response) {
+    return response.json();
+  })
+  .then(function (result) {
+    if (result.success) {
       statusEl.textContent =
-        "Mensagem pronta para envio. Conecte este formulário a um backend ou serviço de e-mail para concluir o recebimento.";
+        "Mensagem enviada com sucesso! A equipe Iguana+ entrará em contato em breve.";
+
+      statusEl.classList.remove("error-msg");
       statusEl.classList.add("visible", "success");
+
       form.reset();
-    });
+    } else {
+      throw new Error(result.message || "Erro ao enviar formulário.");
+    }
+  })
+  .catch(function (error) {
+    console.error("Erro Web3Forms:", error);
+
+    statusEl.textContent =
+      "Não foi possível enviar sua mensagem. Tente novamente ou fale conosco pelo WhatsApp.";
+
+    statusEl.classList.remove("success");
+    statusEl.classList.add("visible", "error-msg");
+  });;
   }
 
   /* ---------------- Ano no footer ---------------- */
