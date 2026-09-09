@@ -257,10 +257,10 @@
           svgIcon("arrow", 15) +
           "</a>" +
           "</div>" +
-          "</article>";
+          "</article>"
+        );
       })
       .join("");
-  }
 
   if (filtersEl) {
     filtersEl.innerHTML = categories
