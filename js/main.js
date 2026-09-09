@@ -16,6 +16,8 @@
     el.setAttribute("rel", "noopener noreferrer");
   });
 
+  /* ---------------- E-mail ---------------- */
+
   document.querySelectorAll("[data-email]").forEach(function (el) {
     if (cfg && cfg.email) {
       el.setAttribute("href", "mailto:" + cfg.email);
@@ -25,6 +27,8 @@
       }
     }
   });
+
+  /* ---------------- Redes sociais ---------------- */
 
   var igLink = document.querySelector("[data-instagram]");
 
@@ -101,7 +105,7 @@
         return (
           '<span class="word" style="animation-delay:' +
           (0.05 + i * 0.045).toFixed(3) +
-          's">' +
+          "s\">" +
           w +
           "</span>"
         );
@@ -109,7 +113,7 @@
       .join(" ");
   }
 
-  /* ---------------- Render: Serviços ---------------- */
+  /* ---------------- Ícones ---------------- */
 
   var ICONS = {
     code:
@@ -160,6 +164,8 @@
     );
   }
 
+  /* ---------------- Serviços ---------------- */
+
   var servicesGrid = document.querySelector(
     "[data-services-grid]"
   );
@@ -187,7 +193,7 @@
       .join("");
   }
 
-  /* ---------------- Render: Portfólio ---------------- */
+  /* ---------------- Portfólio ---------------- */
 
   var portfolioGrid = document.querySelector(
     "[data-portfolio-grid]"
@@ -215,10 +221,7 @@
     if (!portfolioGrid) return;
 
     var list = projects.filter(function (p) {
-      return (
-        filter === "Todos" ||
-        p.category === filter
-      );
+      return filter === "Todos" || p.category === filter;
     });
 
     portfolioGrid.innerHTML = list
@@ -226,7 +229,6 @@
         return (
           '<article class="project-card">' +
           '<div class="project-thumb">' +
-
           (p.image
             ? '<img src="' +
               p.image +
@@ -237,32 +239,25 @@
               '<span style="position:absolute;bottom:12px;left:12px;">' +
               "Mockup a inserir" +
               "</span>") +
-
           "</div>" +
-
           '<div class="project-body">' +
-
           '<span class="project-category">' +
           p.category +
           "</span>" +
-
           "<h3>" +
           p.title +
           "</h3>" +
-
           "<p>" +
           p.description +
           "</p>" +
-
           '<a class="project-link" href="' +
           p.link +
           '">' +
           "Ver projeto " +
           svgIcon("arrow", 15) +
           "</a>" +
-
           "</div>" +
-          "</article>"
+          "</article>";
       })
       .join("");
   }
@@ -282,35 +277,30 @@
       })
       .join("");
 
-    filtersEl.addEventListener(
-      "click",
-      function (e) {
-        var btn = e.target.closest(
-          ".filter-btn"
-        );
+    filtersEl.addEventListener("click", function (e) {
+      var btn = e.target.closest(".filter-btn");
 
-        if (!btn) return;
+      if (!btn) return;
 
-        filtersEl
-          .querySelectorAll(".filter-btn")
-          .forEach(function (b) {
-            b.classList.remove("active");
-          });
+      filtersEl
+        .querySelectorAll(".filter-btn")
+        .forEach(function (b) {
+          b.classList.remove("active");
+        });
 
-        btn.classList.add("active");
+      btn.classList.add("active");
 
-        renderProjects(
-          btn.getAttribute("data-filter")
-        );
-      }
-    );
+      renderProjects(
+        btn.getAttribute("data-filter")
+      );
+    });
   }
 
   if (portfolioGrid) {
     renderProjects("Todos");
   }
 
-  /* ---------------- Render: Como funciona ---------------- */
+  /* ---------------- Como funciona ---------------- */
 
   var processEl = document.querySelector(
     "[data-process]"
@@ -339,7 +329,7 @@
       .join("");
   }
 
-  /* ---------------- Render: Estatísticas ---------------- */
+  /* ---------------- Estatísticas ---------------- */
 
   var trustGrid = document.querySelector(
     "[data-trust-grid]"
@@ -433,173 +423,167 @@
       wrap.classList.remove("error");
     }
 
-    form.addEventListener(
-      "submit",
-      function (e) {
-        e.preventDefault();
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
 
-        var valid = true;
+      var valid = true;
 
-        var fields =
-          form.querySelectorAll("[required]");
+      var fields =
+        form.querySelectorAll("[required]");
 
-        fields.forEach(function (field) {
-          clearError(field);
+      fields.forEach(function (field) {
+        clearError(field);
 
-          var value =
-            field.value.trim();
+        var value = field.value.trim();
 
-          if (!value) {
+        if (!value) {
+          setError(
+            field,
+            "Campo obrigatório."
+          );
+
+          valid = false;
+          return;
+        }
+
+        /* Validação de e-mail CORRETA */
+        if (field.type === "email") {
+          var emailOk =
+            /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
+              value
+            );
+
+          if (!emailOk) {
             setError(
               field,
-              "Campo obrigatório."
+              "Informe um e-mail válido."
             );
 
             valid = false;
-            return;
           }
+        }
+      });
 
-          /* Validação de e-mail corrigida */
-          if (field.type === "email") {
-            var emailOk =
-              /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
-                value
-              );
+      if (statusEl) {
+        statusEl.classList.remove(
+          "visible",
+          "success",
+          "error-msg"
+        );
+      }
 
-            if (!emailOk) {
-              setError(
-                field,
-                "Informe um e-mail válido."
-              );
-
-              valid = false;
-            }
-          }
-        });
-
+      if (!valid) {
         if (statusEl) {
-          statusEl.classList.remove(
+          statusEl.textContent =
+            "Verifique os campos destacados antes de enviar.";
+
+          statusEl.classList.add(
             "visible",
-            "success",
             "error-msg"
           );
         }
 
-        if (!valid) {
+        return;
+      }
+
+      /* ---------------- Web3Forms ---------------- */
+
+      var data = new FormData(form);
+
+      /*
+       * COLOQUE A NOVA ACCESS KEY DO WEB3FORMS AQUI.
+       * Não envie a chave pelo chat.
+       */
+      data.append(
+        "access_key",
+        "7af392f3-6fda-4b4b-815b-b3d239cba9e5"
+      );
+
+      data.append(
+        "subject",
+        "Novo Lead - Iguana+"
+      );
+
+      data.append(
+        "from_name",
+        "Site Iguana+"
+      );
+
+      if (statusEl) {
+        statusEl.textContent =
+          "Enviando...";
+
+        statusEl.classList.add(
+          "visible",
+          "success"
+        );
+      }
+
+      /* URL CORRETA DO WEB3FORMS */
+      fetch(
+        "https://api.web3forms.com/submit",
+        {
+          method: "POST",
+          body: data
+        }
+      )
+        .then(function (response) {
+          if (!response.ok) {
+            throw new Error(
+              "Erro HTTP: " +
+              response.status
+            );
+          }
+
+          return response.json();
+        })
+
+        .then(function (result) {
+          if (result.success) {
+            if (statusEl) {
+              statusEl.textContent =
+                "Mensagem enviada com sucesso! A equipe Iguana+ entrará em contato em breve.";
+
+              statusEl.classList.remove(
+                "error-msg"
+              );
+
+              statusEl.classList.add(
+                "visible",
+                "success"
+              );
+            }
+
+            form.reset();
+          } else {
+            throw new Error(
+              result.message ||
+              "Erro ao enviar formulário."
+            );
+          }
+        })
+
+        .catch(function (error) {
+          console.error(
+            "Erro Web3Forms:",
+            error
+          );
+
           if (statusEl) {
             statusEl.textContent =
-              "Verifique os campos destacados antes de enviar.";
+              "Não foi possível enviar sua mensagem. Tente novamente ou fale conosco pelo WhatsApp.";
+
+            statusEl.classList.remove(
+              "success"
+            );
 
             statusEl.classList.add(
               "visible",
               "error-msg"
             );
           }
-
-          return;
-        }
-
-        /* ---------------- Web3Forms ---------------- */
-
-        var data = new FormData(form);
-
-        /*
-         * IMPORTANTE:
-         * Coloque sua NOVA Access Key do Web3Forms
-         * abaixo.
-         */
-        data.append(
-          "access_key",
-          "7af392f3-6fda-4b4b-815b-b3d239cba9e5"
-        );
-
-        /* Assunto do e-mail recebido */
-        data.append(
-          "subject",
-          "Novo Lead - Iguana+"
-        );
-
-        /* Nome do remetente exibido no e-mail */
-        data.append(
-          "from_name",
-          "Site Iguana+"
-        );
-
-        if (statusEl) {
-          statusEl.textContent =
-            "Enviando...";
-
-          statusEl.classList.add(
-            "visible",
-            "success"
-          );
-        }
-
-        fetch(
-          "https://api.web3forms.com/submit",
-          {
-            method: "POST",
-            body: data
-          }
-        )
-          .then(function (response) {
-            if (!response.ok) {
-              throw new Error(
-                "Erro HTTP: " +
-                response.status
-              );
-            }
-
-            return response.json();
-          })
-
-          .then(function (result) {
-            if (result.success) {
-              if (statusEl) {
-                statusEl.textContent =
-                  "Mensagem enviada com sucesso! A equipe Iguana+ entrará em contato em breve.";
-
-                statusEl.classList.remove(
-                  "error-msg"
-                );
-
-                statusEl.classList.add(
-                  "visible",
-                  "success"
-                );
-              }
-
-              form.reset();
-            } else {
-              throw new Error(
-                result.message ||
-                "Erro ao enviar formulário."
-              );
-            }
-          })
-
-          .catch(function (error) {
-            console.error(
-              "Erro Web3Forms:",
-              error
-            );
-
-            if (statusEl) {
-              statusEl.textContent =
-                "Não foi possível enviar sua mensagem. Tente novamente ou fale conosco pelo WhatsApp.";
-
-              statusEl.classList.remove(
-                "success"
-              );
-
-              statusEl.classList.add(
-                "visible",
-                "error-msg"
-              );
-            }
-          });
-      }
-    );
+        });
+    });
   }
 
   /* ---------------- Ano no footer ---------------- */
