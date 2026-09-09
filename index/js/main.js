@@ -491,10 +491,6 @@
 
       var data = new FormData(form);
 
-      /*
-       * COLOQUE A NOVA ACCESS KEY DO WEB3FORMS AQUI.
-       * Não envie a chave pelo chat.
-       */
       data.append(
         "access_key",
         "7af392f3-6fda-4b4b-815b-b3d239cba9e5"
@@ -520,7 +516,6 @@
         );
       }
 
-      /* URL CORRETA DO WEB3FORMS */
       fetch(
         "https://api.web3forms.com/submit",
         {
