@@ -1,0 +1,113 @@
+{
+  "inicio": {
+    "mensagem": "Olá! 👋 Sou o assistente da Iguana+. Como podemos ajudar?",
+    "opcoes": [
+      {
+        "texto": "💻 Desenvolvimento de sites",
+        "destino": "sites"
+      },
+      {
+        "texto": "📊 Dados e BI",
+        "destino": "dados"
+      },
+      {
+        "texto": "⚙️ Automação de processos",
+        "destino": "automacao"
+      },
+      {
+        "texto": "🗄️ Banco de dados",
+        "destino": "database"
+      },
+      {
+        "texto": "💰 Solicitar orçamento",
+        "destino": "orcamento"
+      }
+    ]
+  },
+
+  "sites": {
+    "mensagem": "Criamos sites modernos, responsivos e personalizados para empresas.",
+    "opcoes": [
+      {
+        "texto": "Quero saber mais",
+        "resposta": "Desenvolvemos sites institucionais e páginas personalizadas para apresentar sua empresa, seus serviços e seus diferenciais."
+      },
+      {
+        "texto": "💰 Solicitar orçamento",
+        "destino": "orcamento"
+      },
+      {
+        "texto": "⬅️ Voltar",
+        "destino": "inicio"
+      }
+    ]
+  },
+
+  "dados": {
+    "mensagem": "Trabalhamos com dados e BI para transformar informações em decisões melhores.",
+    "opcoes": [
+      {
+        "texto": "Quais soluções vocês oferecem?",
+        "resposta": "Podemos trabalhar com dashboards, indicadores, relatórios, organização de dados e soluções de BI."
+      },
+      {
+        "texto": "💰 Solicitar orçamento",
+        "destino": "orcamento"
+      },
+      {
+        "texto": "⬅️ Voltar",
+        "destino": "inicio"
+      }
+    ]
+  },
+
+  "automacao": {
+    "mensagem": "Automatizamos tarefas e processos para reduzir trabalho manual e aumentar a eficiência.",
+    "opcoes": [
+      {
+        "texto": "Quero saber mais",
+        "resposta": "Analisamos seus processos e identificamos oportunidades de automação e integração."
+      },
+      {
+        "texto": "💰 Solicitar orçamento",
+        "destino": "orcamento"
+      },
+      {
+        "texto": "⬅️ Voltar",
+        "destino": "inicio"
+      }
+    ]
+  },
+
+  "database": {
+    "mensagem": "Trabalhamos com soluções relacionadas a bancos de dados e organização das informações.",
+    "opcoes": [
+      {
+        "texto": "Quero saber mais",
+        "resposta": "Podemos atuar com análise, organização, otimização e suporte relacionado a bancos de dados."
+      },
+      {
+        "texto": "💰 Solicitar orçamento",
+        "destino": "orcamento"
+      },
+      {
+        "texto": "⬅️ Voltar",
+        "destino": "inicio"
+      }
+    ]
+  },
+
+  "orcamento": {
+    "mensagem": "Ótimo! Para solicitar um orçamento, podemos continuar pelo WhatsApp.",
+    "opcoes": [
+      {
+        "texto": "📱 Falar no WhatsApp",
+        "acao": "whatsapp"
+      },
+      {
+        "texto": "⬅️ Voltar",
+        "destino": "inicio"
+      }
+    ]
+  }
+}

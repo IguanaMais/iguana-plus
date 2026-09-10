@@ -582,7 +582,7 @@
     });
   }
 
-  /* ---------------- Ano no footer ---------------- */
+/* ---------------- Ano no footer ---------------- */
 
   var yearEl = document.querySelector(
     "[data-year]"
@@ -592,4 +592,137 @@
     yearEl.textContent =
       new Date().getFullYear();
   }
+
+
+  /* ---------------- Chat Iguana+ ---------------- */
+
+    /* ---------------- Chat Iguana+ ---------------- */
+
+  var chatToggle = document.getElementById("chat-toggle");
+  var chatWidget = document.getElementById("chat-widget");
+  var chatClose = document.getElementById("chat-close");
+  var chatMessages = document.getElementById("chat-messages");
+  var chatOptions = document.getElementById("chat-options");
+
+  var chatData = null;
+
+  function carregarChat() {
+    fetch("assets/data/chat.json")
+      .then(function (response) {
+        if (!response.ok) {
+          throw new Error("Não foi possível carregar o chat.");
+        }
+
+        return response.json();
+      })
+      .then(function (data) {
+        chatData = data;
+        mostrarChat("inicio");
+      })
+      .catch(function (error) {
+        console.error("Erro ao carregar chat:", error);
+
+        if (chatMessages) {
+          chatMessages.innerHTML =
+            "<p>Não foi possível carregar o atendimento.</p>";
+        }
+      });
+  }
+
+  function mostrarChat(chave) {
+    if (!chatData || !chatData[chave]) return;
+
+    var bloco = chatData[chave];
+
+    chatMessages.innerHTML = "";
+    chatOptions.innerHTML = "";
+
+    if (bloco.mensagem) {
+      var mensagem = document.createElement("div");
+
+      mensagem.className = "chat-message";
+      mensagem.textContent = bloco.mensagem;
+
+      chatMessages.appendChild(mensagem);
+    }
+
+    if (Array.isArray(bloco.opcoes)) {
+      bloco.opcoes.forEach(function (opcao) {
+        var button = document.createElement("button");
+
+        button.type = "button";
+        button.className = "chat-option";
+        button.textContent = opcao.texto;
+
+        button.addEventListener("click", function () {
+
+          if (opcao.destino) {
+            mostrarChat(opcao.destino);
+          }
+
+          if (opcao.resposta) {
+            mostrarResposta(opcao.resposta);
+          }
+
+          if (opcao.acao === "whatsapp") {
+            abrirWhatsApp();
+          }
+
+        });
+
+        chatOptions.appendChild(button);
+      });
+    }
+  }
+
+  function mostrarResposta(resposta) {
+    var mensagem = document.createElement("div");
+
+    mensagem.className = "chat-message";
+    mensagem.textContent = resposta;
+
+    chatMessages.appendChild(mensagem);
+
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+
+  function abrirWhatsApp() {
+    if (window.getWhatsAppLink) {
+      window.open(
+        window.getWhatsAppLink("default"),
+        "_blank",
+        "noopener,noreferrer"
+      );
+    }
+  }
+
+if (chatToggle && chatWidget) {
+  chatToggle.addEventListener("click", function () {
+    var isOpen = chatWidget.classList.toggle("open");
+    chatWidget.setAttribute("aria-hidden", String(!isOpen));
+
+    if (isOpen) {
+      if (!chatData) {
+        carregarChat();
+      } else {
+        mostrarChat("inicio");
+      }
+    }
+  });
+}
+
+if (chatClose && chatWidget) {
+
+    chatClose.addEventListener("click", function () {
+
+      chatWidget.classList.remove("open");
+
+      chatWidget.setAttribute(
+        "aria-hidden",
+        "true"
+      );
+
+    });
+  }
+
 })();
