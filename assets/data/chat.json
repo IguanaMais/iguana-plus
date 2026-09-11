@@ -1,22 +1,22 @@
 {
   "inicio": {
-    "mensagem": "Olá! 👋 Sou o assistente da Iguana+. Como podemos ajudar?",
+    "mensagem": "Olá! 👋 Sou o assistente da Iguana+. Vamos encontrar a solução certa para o seu negócio. O que você procura?",
     "opcoes": [
       {
         "texto": "💻 Desenvolvimento de sites",
         "destino": "sites"
       },
       {
-        "texto": "📊 Dados e BI",
-        "destino": "dados"
+        "texto": "🤖 Implantar um chatbot",
+        "destino": "chatbots"
       },
       {
-        "texto": "⚙️ Automação de processos",
+        "texto": "⚙️ Automatizar processos",
         "destino": "automacao"
       },
       {
-        "texto": "🗄️ Banco de dados",
-        "destino": "database"
+        "texto": "📈 Outros serviços do site",
+        "destino": "consultoria"
       },
       {
         "texto": "💰 Solicitar orçamento",
@@ -24,88 +24,292 @@
       }
     ]
   },
-
   "sites": {
-    "mensagem": "Criamos sites modernos, responsivos e personalizados para empresas.",
+    "mensagem": "Criamos sites responsivos para apresentar sua empresa e facilitar o contato com novos clientes. Você quer um site novo, uma landing page ou melhorar o site que já tem?",
     "opcoes": [
       {
         "texto": "Quero saber mais",
-        "resposta": "Desenvolvemos sites institucionais e páginas personalizadas para apresentar sua empresa, seus serviços e seus diferenciais."
+        "resposta": "Desenvolvemos sites institucionais, landing pages e reformulações de sites. O projeto é planejado conforme sua marca, seu público e o objetivo comercial da página."
+      },
+      {
+        "texto": "Quero um site para minha empresa",
+        "destino": "institucional"
+      },
+      {
+        "texto": "Quero uma landing page",
+        "destino": "landing_page"
+      },
+      {
+        "texto": "Quero melhorar meu site",
+        "destino": "reformular_site"
       },
       {
         "texto": "💰 Solicitar orçamento",
         "destino": "orcamento"
       },
       {
-        "texto": "⬅️ Voltar",
+        "texto": "⬅️ Menu principal",
         "destino": "inicio"
       }
     ]
   },
-
-  "dados": {
-    "mensagem": "Trabalhamos com dados e BI para transformar informações em decisões melhores.",
+  "institucional": {
+    "mensagem": "Um site institucional apresenta sua empresa, serviços e diferenciais, com navegação adaptada ao celular e canais de contato para quem quer contratar.",
     "opcoes": [
       {
-        "texto": "Quais soluções vocês oferecem?",
-        "resposta": "Podemos trabalhar com dashboards, indicadores, relatórios, organização de dados e soluções de BI."
+        "texto": "O que preciso para começar?",
+        "resposta": "Conte o que sua empresa faz, quais serviços deseja divulgar e como quer receber os contatos. Se tiver logo, textos, fotos ou referências, compartilhe com a equipe para definirmos o escopo."
       },
       {
         "texto": "💰 Solicitar orçamento",
         "destino": "orcamento"
       },
       {
-        "texto": "⬅️ Voltar",
+        "texto": "⬅️ Opções de sites",
+        "destino": "sites"
+      },
+      {
+        "texto": "⬅️ Menu principal",
         "destino": "inicio"
       }
     ]
   },
-
+  "landing_page": {
+    "mensagem": "Uma landing page concentra a apresentação de uma oferta em uma página, com foco em gerar contatos para uma campanha, produto ou serviço.",
+    "opcoes": [
+      {
+        "texto": "Ela pode ter formulário e WhatsApp?",
+        "resposta": "Podemos planejar a página com formulário e chamada para o WhatsApp, conforme o objetivo da campanha. A equipe define com você o conteúdo e as integrações necessárias."
+      },
+      {
+        "texto": "💰 Solicitar orçamento",
+        "destino": "orcamento"
+      },
+      {
+        "texto": "⬅️ Opções de sites",
+        "destino": "sites"
+      },
+      {
+        "texto": "⬅️ Menu principal",
+        "destino": "inicio"
+      }
+    ]
+  },
+  "reformular_site": {
+    "mensagem": "Já tem um site? Podemos avaliar melhorias na identidade visual, navegação, apresentação dos serviços e experiência no celular.",
+    "opcoes": [
+      {
+        "texto": "Como peço uma avaliação?",
+        "resposta": "Envie à equipe o endereço do seu site e conte o que deseja melhorar: visual, uso no celular, organização das páginas ou geração de contatos. A partir disso, definimos uma proposta."
+      },
+      {
+        "texto": "💰 Solicitar orçamento",
+        "destino": "orcamento"
+      },
+      {
+        "texto": "⬅️ Opções de sites",
+        "destino": "sites"
+      },
+      {
+        "texto": "⬅️ Menu principal",
+        "destino": "inicio"
+      }
+    ]
+  },
+  "chatbots": {
+    "mensagem": "Planejamos e implantamos chatbots para o primeiro atendimento, dúvidas frequentes e qualificação de interessados nos seus serviços. Onde você quer melhorar o atendimento?",
+    "opcoes": [
+      {
+        "texto": "Quero um chatbot no meu site",
+        "destino": "chatbot_site"
+      },
+      {
+        "texto": "Quero integrar ao WhatsApp",
+        "destino": "chatbot_whatsapp"
+      },
+      {
+        "texto": "Como funciona a implantação?",
+        "resposta": "Entendemos seu atendimento, organizamos perguntas e respostas, definimos o fluxo e quando encaminhar para a equipe. Depois desenvolvemos, testamos e acompanhamos a solução conforme o escopo combinado."
+      },
+      {
+        "texto": "💰 Solicitar orçamento",
+        "destino": "orcamento"
+      },
+      {
+        "texto": "⬅️ Menu principal",
+        "destino": "inicio"
+      }
+    ]
+  },
+  "chatbot_site": {
+    "mensagem": "O chatbot no site pode apresentar serviços, responder perguntas frequentes e orientar o visitante até um pedido de orçamento ou contato com sua equipe.",
+    "opcoes": [
+      {
+        "texto": "Pode ajudar a vender meus serviços?",
+        "resposta": "Podemos estruturar o fluxo para explicar suas ofertas, entender o interesse do visitante e encaminhar oportunidades para a equipe comercial. As respostas e etapas são definidas com você."
+      },
+      {
+        "texto": "💰 Solicitar orçamento",
+        "destino": "orcamento"
+      },
+      {
+        "texto": "⬅️ Opções de chatbot",
+        "destino": "chatbots"
+      },
+      {
+        "texto": "⬅️ Menu principal",
+        "destino": "inicio"
+      }
+    ]
+  },
+  "chatbot_whatsapp": {
+    "mensagem": "Podemos avaliar uma solução de chatbot integrada ao WhatsApp para organizar o primeiro atendimento e encaminhar interessados à sua equipe.",
+    "opcoes": [
+      {
+        "texto": "O que é necessário para integrar?",
+        "resposta": "Conte como usa o WhatsApp hoje, quais dúvidas mais recebe e quais etapas quer automatizar. A equipe verifica a viabilidade, as ferramentas necessárias e os custos envolvidos antes de definir a implantação."
+      },
+      {
+        "texto": "💰 Solicitar orçamento",
+        "destino": "orcamento"
+      },
+      {
+        "texto": "⬅️ Opções de chatbot",
+        "destino": "chatbots"
+      },
+      {
+        "texto": "⬅️ Menu principal",
+        "destino": "inicio"
+      }
+    ]
+  },
   "automacao": {
-    "mensagem": "Automatizamos tarefas e processos para reduzir trabalho manual e aumentar a eficiência.",
+    "mensagem": "Automatizamos atendimentos, processos e tarefas repetitivas para reduzir trabalho manual e ajudar sua equipe a ganhar tempo.",
     "opcoes": [
       {
-        "texto": "Quero saber mais",
-        "resposta": "Analisamos seus processos e identificamos oportunidades de automação e integração."
+        "texto": "O que posso automatizar?",
+        "resposta": "Podemos avaliar tarefas repetitivas do atendimento e da operação, além de integrações entre ferramentas. Conte como o processo funciona hoje para identificarmos uma solução adequada."
+      },
+      {
+        "texto": "Meu foco é automatizar o atendimento",
+        "destino": "chatbots"
       },
       {
         "texto": "💰 Solicitar orçamento",
         "destino": "orcamento"
       },
       {
-        "texto": "⬅️ Voltar",
+        "texto": "⬅️ Menu principal",
         "destino": "inicio"
       }
     ]
   },
-
-  "database": {
-    "mensagem": "Trabalhamos com soluções relacionadas a bancos de dados e organização das informações.",
+  "consultoria": {
+    "mensagem": "Além de sites, chatbots e automação, o site apresenta estes serviços para apoiar as decisões do seu negócio:",
     "opcoes": [
       {
-        "texto": "Quero saber mais",
-        "resposta": "Podemos atuar com análise, organização, otimização e suporte relacionado a bancos de dados."
+        "texto": "Consultoria financeira",
+        "destino": "financeira"
       },
+      {
+        "texto": "Análise de mercado",
+        "destino": "mercado"
+      },
+      {
+        "texto": "Precificação",
+        "destino": "precificacao"
+      },
+      {
+        "texto": "Análise SWOT",
+        "destino": "swot"
+      },
+      {
+        "texto": "⬅️ Menu principal",
+        "destino": "inicio"
+      }
+    ]
+  },
+  "financeira": {
+    "mensagem": "A consultoria financeira transforma os números do negócio em informações úteis para apoiar decisões. Conte à equipe qual dificuldade sua empresa quer resolver para definirmos o escopo.",
+    "opcoes": [
       {
         "texto": "💰 Solicitar orçamento",
         "destino": "orcamento"
       },
       {
-        "texto": "⬅️ Voltar",
+        "texto": "⬅️ Outros serviços",
+        "destino": "consultoria"
+      },
+      {
+        "texto": "⬅️ Menu principal",
         "destino": "inicio"
       }
     ]
   },
-
+  "mercado": {
+    "mensagem": "A análise de mercado ajuda a entender concorrentes, oportunidades e posicionamento. Converse com a equipe sobre o mercado e o objetivo da sua empresa para solicitar uma proposta.",
+    "opcoes": [
+      {
+        "texto": "💰 Solicitar orçamento",
+        "destino": "orcamento"
+      },
+      {
+        "texto": "⬅️ Outros serviços",
+        "destino": "consultoria"
+      },
+      {
+        "texto": "⬅️ Menu principal",
+        "destino": "inicio"
+      }
+    ]
+  },
+  "precificacao": {
+    "mensagem": "A precificação considera custos, margem, mercado e posicionamento para apoiar a definição de preços. Conte quais produtos ou serviços deseja analisar para receber uma proposta.",
+    "opcoes": [
+      {
+        "texto": "💰 Solicitar orçamento",
+        "destino": "orcamento"
+      },
+      {
+        "texto": "⬅️ Outros serviços",
+        "destino": "consultoria"
+      },
+      {
+        "texto": "⬅️ Menu principal",
+        "destino": "inicio"
+      }
+    ]
+  },
+  "swot": {
+    "mensagem": "A análise SWOT identifica forças, fraquezas, oportunidades e ameaças para orientar a estratégia do negócio. A equipe pode entender seu momento e propor o trabalho.",
+    "opcoes": [
+      {
+        "texto": "💰 Solicitar orçamento",
+        "destino": "orcamento"
+      },
+      {
+        "texto": "⬅️ Outros serviços",
+        "destino": "consultoria"
+      },
+      {
+        "texto": "⬅️ Menu principal",
+        "destino": "inicio"
+      }
+    ]
+  },
   "orcamento": {
-    "mensagem": "Ótimo! Para solicitar um orçamento, podemos continuar pelo WhatsApp.",
+    "mensagem": "Vamos conversar sobre seu projeto pelo WhatsApp. Ao abrir a conversa, conte o nome da empresa, a solução que procura e seu principal objetivo. Se tiver um site ou uma referência, envie também.",
     "opcoes": [
       {
         "texto": "📱 Falar no WhatsApp",
         "acao": "whatsapp"
       },
       {
-        "texto": "⬅️ Voltar",
+        "texto": "Quanto custa e qual é o prazo?",
+        "resposta": "O valor e o prazo dependem das páginas, funcionalidades, conteúdo e integrações do projeto. A equipe entende sua necessidade e apresenta uma proposta com escopo, investimento e prazo."
+      },
+      {
+        "texto": "⬅️ Menu principal",
         "destino": "inicio"
       }
     ]
