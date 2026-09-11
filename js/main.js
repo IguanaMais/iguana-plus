@@ -30,17 +30,13 @@
 
   /* ---------------- Redes sociais ---------------- */
 
-  var igLink = document.querySelector("[data-instagram]");
-
-  if (igLink && cfg && cfg.social) {
-    igLink.setAttribute("href", cfg.social.instagram);
-  }
-
-  var liLink = document.querySelector("[data-linkedin]");
-
-  if (liLink && cfg && cfg.social) {
-    liLink.setAttribute("href", cfg.social.linkedin);
-  }
+  ["instagram", "linkedin"].forEach(function (network) {
+    document.querySelectorAll("[data-" + network + "]").forEach(function (link) {
+      var url = cfg && cfg.social && cfg.social[network];
+      if (url && /^https:\/\//.test(url)) link.href = url;
+      else link.hidden = true;
+    });
+  });
 
   /* ---------------- Header on scroll ---------------- */
 
@@ -67,28 +63,50 @@
   var menuToggle = document.querySelector(".menu-toggle");
   var mobilePanel = document.querySelector(".mobile-panel");
 
-  function closeMenu() {
+  function closeMenu(restoreFocus) {
     if (!mobilePanel || !menuToggle) return;
-
     mobilePanel.classList.remove("open");
+    mobilePanel.inert = true;
     document.body.classList.remove("menu-open");
     menuToggle.setAttribute("aria-expanded", "false");
+    menuToggle.setAttribute("aria-label", "Abrir menu");
+    if (restoreFocus === true) menuToggle.focus();
   }
-
   if (menuToggle && mobilePanel) {
     menuToggle.addEventListener("click", function () {
-      var isOpen = mobilePanel.classList.toggle("open");
-
-      document.body.classList.toggle("menu-open", isOpen);
-
-      menuToggle.setAttribute(
-        "aria-expanded",
-        String(isOpen)
-      );
+      var isOpen = !mobilePanel.classList.contains("open");
+      closeMenu();
+      if (isOpen) {
+        closeChat(false);
+        mobilePanel.inert = false;
+        mobilePanel.classList.add("open");
+        document.body.classList.add("menu-open");
+        menuToggle.setAttribute("aria-expanded", "true");
+        menuToggle.setAttribute("aria-label", "Fechar menu");
+        mobilePanel.querySelector("a").focus();
+      }
     });
-
     mobilePanel.querySelectorAll("a").forEach(function (a) {
-      a.addEventListener("click", closeMenu);
+      a.addEventListener("click", function () {
+        closeMenu(true);
+        if (a.hash) {
+          var target = document.querySelector(a.hash);
+          if (target) { target.tabIndex = -1; target.focus({preventScroll: true}); }
+        }
+      });
+    });
+    window.addEventListener("resize", function () {
+      if (window.innerWidth > 880) closeMenu();
+    });
+    document.addEventListener("keydown", function (event) {
+      if (!mobilePanel.classList.contains("open")) return;
+      if (event.key === "Escape") closeMenu(true);
+      if (event.key === "Tab") {
+        var links = [menuToggle].concat(Array.from(mobilePanel.querySelectorAll("a")));
+        var first = links[0], last = links[links.length - 1];
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+      }
     });
   }
 
@@ -232,12 +250,12 @@
           (p.image
             ? '<img src="' +
               p.image +
-              '" alt="Mockup do projeto ' +
+              '" loading="lazy" alt="Prévia do projeto ' +
               p.title +
               '">'
             : svgIcon("grid", 40) +
               '<span style="position:absolute;bottom:12px;left:12px;">' +
-              "Mockup a inserir" +
+              "Exemplo ilustrativo" +
               "</span>") +
           "</div>" +
           '<div class="project-body">' +
@@ -250,12 +268,9 @@
           "<p>" +
           p.description +
           "</p>" +
-          '<a class="project-link" href="' +
-          p.link +
-          '">' +
-          "Ver projeto " +
-          svgIcon("arrow", 15) +
-          "</a>" +
+          (p.link && p.link !== "#"
+            ? '<a class="project-link" href="' + p.link + '">Ver projeto ' + svgIcon("arrow", 15) + '</a>'
+            : '<span class="project-pending">Exemplo ilustrativo</span>') +
           "</div>" +
           "</article>"
         );
@@ -269,7 +284,7 @@
         return (
           '<button type="button" class="filter-btn' +
           (i === 0 ? " active" : "") +
-          '" data-filter="' +
+          '" aria-pressed="' + (i === 0 ? 'true' : 'false') + '" data-filter="' +
           c +
           '">' +
           c +
@@ -287,9 +302,11 @@
         .querySelectorAll(".filter-btn")
         .forEach(function (b) {
           b.classList.remove("active");
+          b.setAttribute("aria-pressed", "false");
         });
 
       btn.classList.add("active");
+      btn.setAttribute("aria-pressed", "true");
 
       renderProjects(
         btn.getAttribute("data-filter")
@@ -376,7 +393,7 @@
         });
       },
       {
-        threshold: 0.15
+        threshold: 0
       }
     );
 
@@ -406,6 +423,7 @@
       if (!wrap) return;
 
       wrap.classList.add("error");
+      field.setAttribute("aria-invalid", "true");
 
       var msg = wrap.querySelector(
         ".field-error-msg"
@@ -413,6 +431,8 @@
 
       if (msg) {
         msg.textContent = message;
+        msg.id = field.id + "-error";
+        field.setAttribute("aria-describedby", msg.id);
       }
     }
 
@@ -422,10 +442,16 @@
       if (!wrap) return;
 
       wrap.classList.remove("error");
+      field.removeAttribute("aria-invalid");
+      field.removeAttribute("aria-describedby");
     }
 
+    var sending = false;
+    var submitButton = form.querySelector("[type=submit]");
+    form.addEventListener("input", function (event) { clearError(event.target); });
     form.addEventListener("submit", function (e) {
       e.preventDefault();
+      if (sending || form.elements.botcheck.checked) return;
 
       var valid = true;
 
@@ -447,7 +473,11 @@
           return;
         }
 
-        /* Validação de e-mail CORRETA */
+        if (field.type === "tel" && !/^(?:55)?[1-9][0-9][0-9]{8,9}$/.test(value.replace(/[\s()+.-]/g, ""))) {
+          setError(field, "Informe um telefone com DDD (10 ou 11 dígitos; +55 opcional).");
+          valid = false;
+        }
+        /* Validação de e-mail */
         if (field.type === "email") {
           var emailOk =
             /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
@@ -474,6 +504,7 @@
       }
 
       if (!valid) {
+        form.querySelector("[aria-invalid=true]").focus();
         if (statusEl) {
           statusEl.textContent =
             "Verifique os campos destacados antes de enviar.";
@@ -489,11 +520,17 @@
 
       /* ---------------- Web3Forms ---------------- */
 
+      sending = true;
+      submitButton.disabled = true;
+      form.setAttribute("aria-busy", "true");
+      var controller = new AbortController();
+      var timeout = setTimeout(function () { controller.abort(); }, 15000);
       var data = new FormData(form);
+      data.set("replyto", form.elements.email.value.trim());
 
       data.append(
         "access_key",
-        "7af392f3-6fda-4b4b-815b-b3d239cba9e5"
+        cfg.formAccessKey
       );
 
       data.append(
@@ -520,7 +557,8 @@
         "https://api.web3forms.com/submit",
         {
           method: "POST",
-          body: data
+          body: data,
+          signal: controller.signal
         }
       )
         .then(function (response) {
@@ -560,10 +598,7 @@
         })
 
         .catch(function (error) {
-          console.error(
-            "Erro Web3Forms:",
-            error
-          );
+
 
           if (statusEl) {
             statusEl.textContent =
@@ -578,6 +613,11 @@
               "error-msg"
             );
           }
+        }).finally(function () {
+          clearTimeout(timeout);
+          sending = false;
+          submitButton.disabled = false;
+          form.removeAttribute("aria-busy");
         });
     });
   }
@@ -605,9 +645,15 @@
   var chatOptions = document.getElementById("chat-options");
 
   var chatData = null;
+  var chatLoading = false;
 
   function carregarChat() {
-    fetch("assets/data/chat.json")
+    if (chatLoading) return;
+    chatLoading = true;
+    chatMessages.textContent = "Carregando atendimento…";
+    var controller = new AbortController();
+    var timeout = setTimeout(function () { controller.abort(); }, 10000);
+    fetch("assets/data/chat.json", { signal: controller.signal })
       .then(function (response) {
         if (!response.ok) {
           throw new Error("Não foi possível carregar o chat.");
@@ -616,22 +662,32 @@
         return response.json();
       })
       .then(function (data) {
+        if (!data.inicio || !Array.isArray(data.inicio.opcoes)) throw new Error("Chat inválido");
         chatData = data;
         mostrarChat("inicio");
       })
       .catch(function (error) {
-        console.error("Erro ao carregar chat:", error);
+
 
         if (chatMessages) {
           chatMessages.innerHTML =
-            "<p>Não foi possível carregar o atendimento.</p>";
+            "<p>Não foi possível carregar o atendimento. Fale com a equipe pelo WhatsApp.</p>";
+          chatOptions.replaceChildren();
+          var fallback = document.createElement("a");
+          fallback.className = "chat-option";
+          fallback.textContent = "Falar no WhatsApp";
+          fallback.href = window.getWhatsAppLink("default");
+          fallback.target = "_blank";
+          fallback.rel = "noopener noreferrer";
+          chatOptions.appendChild(fallback);
         }
-      });
+      }).finally(function () { chatLoading = false; clearTimeout(timeout); });
   }
 
   function mostrarChat(chave) {
     if (!chatData || !chatData[chave]) return;
 
+    var hadFocus = chatWidget.contains(document.activeElement);
     var bloco = chatData[chave];
 
     chatMessages.innerHTML = "";
@@ -673,6 +729,8 @@
         chatOptions.appendChild(button);
       });
     }
+    chatMessages.scrollTop = 0;
+    if (hadFocus && chatOptions.firstElementChild) chatOptions.firstElementChild.focus();
   }
 
   function mostrarResposta(resposta) {
@@ -696,33 +754,30 @@
     }
   }
 
-if (chatToggle && chatWidget) {
-  chatToggle.addEventListener("click", function () {
-    var isOpen = chatWidget.classList.toggle("open");
-    chatWidget.setAttribute("aria-hidden", String(!isOpen));
-
-    if (isOpen) {
-      if (!chatData) {
-        carregarChat();
-      } else {
-        mostrarChat("inicio");
-      }
-    }
-  });
-}
-
-if (chatClose && chatWidget) {
-
-    chatClose.addEventListener("click", function () {
-
-      chatWidget.classList.remove("open");
-
-      chatWidget.setAttribute(
-        "aria-hidden",
-        "true"
-      );
-
+  function closeChat(restoreFocus) {
+    if (!chatWidget || !chatToggle) return;
+    chatWidget.classList.remove("open");
+    chatWidget.setAttribute("aria-hidden", "true");
+    chatWidget.inert = true;
+    chatToggle.setAttribute("aria-expanded", "false");
+    chatToggle.setAttribute("aria-label", "Abrir chat");
+    if (restoreFocus !== false) chatToggle.focus();
+  }
+  if (chatToggle && chatWidget) {
+    chatToggle.addEventListener("click", function () {
+      if (chatWidget.classList.contains("open")) { closeChat(); return; }
+      chatWidget.classList.add("open");
+      chatWidget.inert = false;
+      chatWidget.setAttribute("aria-hidden", "false");
+      chatToggle.setAttribute("aria-expanded", "true");
+      chatToggle.setAttribute("aria-label", "Fechar chat");
+      chatClose.focus();
+      if (!chatData) carregarChat();
+      else mostrarChat("inicio");
+    });
+    chatClose.addEventListener("click", function () { closeChat(); });
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape" && chatWidget.classList.contains("open")) closeChat();
     });
   }
-
 })();

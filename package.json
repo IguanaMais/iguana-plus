@@ -1,0 +1,10 @@
+{
+  "name": "iguana-plus",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node server.mjs",
+    "check": "node --check server.mjs && node --check js/config.js && node --check js/data.js && node --check js/main.js",
+    "test:browser": "node tests/browser.cjs"
+  }
+}

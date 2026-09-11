@@ -15,6 +15,8 @@ window.IGUANA_CONFIG = {
     contato: "Olá! Vim pelo site da Iguana+ e quero conversar sobre um projeto.",
   },
 
+  formAccessKey: "7af392f3-6fda-4b4b-815b-b3d239cba9e5",
+
   email: "iguana.empresarial@gmail.com",
 
   social: {

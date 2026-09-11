@@ -10,7 +10,7 @@
 window.IGUANA_PROJECTS = [
   {
     id: "projeto-01",
-    title: "Site Institucional — Cliente X",
+    title: "Site Institucional — Exemplo ilustrativo",
     category: "Desenvolvimento Web",
     description:
       "Desenvolvimento de site institucional responsivo com foco em apresentação da marca e geração de contatos.",
@@ -18,17 +18,17 @@ window.IGUANA_PROJECTS = [
     link: "#",
   },
   {
-    id: "projeto-02",
-    title: "Landing Page — Cliente Y",
-    category: "Landing Pages",
-    description:
-      "Página de conversão criada para campanha de lançamento, com formulário integrado e foco em performance.",
-    image: null,
-    link: "#",
+  id: "projeto-02",
+  title: "Landing Page — Exemplo ilustrativo",
+  category: "Landing Pages",
+  description:
+    "Página de conversão criada para campanha de lançamento, com formulário integrado e foco em performance.",
+  image: "assets/img/folder_barbearia.jpg",
+  link: "#",
   },
   {
     id: "projeto-03",
-    title: "Sistema Interno — Cliente Z",
+    title: "Sistema Interno — Exemplo ilustrativo",
     category: "Sistemas",
     description:
       "Sistema web sob medida para organizar processos internos e centralizar informações da operação.",
@@ -37,7 +37,7 @@ window.IGUANA_PROJECTS = [
   },
   {
     id: "projeto-04",
-    title: "Automação de Atendimento — Cliente W",
+    title: "Automação de Atendimento — Exemplo ilustrativo",
     category: "Automação",
     description:
       "Fluxo de automação para reduzir tarefas repetitivas e agilizar respostas da equipe.",
@@ -46,7 +46,7 @@ window.IGUANA_PROJECTS = [
   },
   {
     id: "projeto-05",
-    title: "Chatbot de Vendas — Cliente V",
+    title: "Chatbot de Vendas — Exemplo ilustrativo",
     category: "Chatbots",
     description:
       "Chatbot para qualificação de leads e primeiro atendimento, integrado ao WhatsApp.",
@@ -55,7 +55,7 @@ window.IGUANA_PROJECTS = [
   },
   {
     id: "projeto-06",
-    title: "Site Institucional — Cliente U",
+    title: "Site Institucional — Exemplo ilustrativo",
     category: "Desenvolvimento Web",
     description:
       "Redesign de site institucional com nova identidade visual e estrutura otimizada para SEO.",

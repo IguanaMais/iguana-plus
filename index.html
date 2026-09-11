@@ -12,7 +12,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:title" content="Iguana+ | Tecnologia, Desenvolvimento Web e Consultoria" />
 <meta property="og:description" content="Tecnologia com estratégia: sites, sistemas, chatbots, automação e consultoria empresarial e financeira para empresas que querem evoluir." />
-<meta property="og:image" content="/assets/img/og-cover.jpg" />
+<meta property="og:image" content="https://www.iguanaplus.com.br/assets/img/logo.png" />
 <meta property="og:locale" content="pt_BR" />
 
 <!-- Favicon (mascote simplificado, embutido como SVG) -->
@@ -23,8 +23,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
 
-<!-- Ícones (Lucide) -->
-<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
+
 
 <link rel="stylesheet" href="css/styles.css" />
 
@@ -40,6 +39,8 @@
 </script>
 </head>
 <body>
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+<noscript><p>Ative o JavaScript para usar o portfólio, o formulário e o chat. Contato: <a href="mailto:iguana.empresarial@gmail.com">iguana.empresarial@gmail.com</a>.</p><style>.reveal { opacity:1; transform:none; }</style></noscript>
 
 <!-- =================== HEADER =================== -->
 <header class="site-header">
@@ -48,7 +49,7 @@
       <!-- Ícone/mascote oficial: substitua o src abaixo pelo arquivo definitivo (SVG/PNG) da marca -->
       <img
         class="brand-icon"
-        src="assets\img\rosto_iguana-png.png"
+        src="assets/img/rosto_iguana-png.png"
         alt=""
         width="40"
         height="40"
@@ -70,7 +71,7 @@
 
     <div class="nav-actions">
       <a href="#" class="btn btn-primary header-cta" data-whatsapp="default">Fale conosco</a>
-      <button class="menu-toggle" aria-label="Abrir menu" aria-expanded="false">
+      <button class="menu-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobile-menu">
         <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
       </button>
     </div>
@@ -78,7 +79,7 @@
 </header>
 
 <!-- Menu mobile -->
-<div class="mobile-panel" role="dialog" aria-modal="true">
+<nav class="mobile-panel" id="mobile-menu" aria-label="Navegação móvel" inert>
   <ul>
     <li><a href="#inicio">Início</a></li>
     <li><a href="#servicos">Serviços</a></li>
@@ -87,9 +88,9 @@
     <li><a href="#contato">Contato</a></li>
   </ul>
   <a href="#" class="btn btn-primary" data-whatsapp="default" style="align-self:flex-start">Fale conosco no WhatsApp</a>
-</div>
+</nav>
 
-<main>
+<main id="conteudo" tabindex="-1">
 
   <!-- =================== HERO =================== -->
   <section class="hero" id="inicio">
@@ -183,12 +184,12 @@
   <section class="section-pad" id="portfolio">
     <div class="container">
       <div class="section-head reveal">
-        <h2>Projetos que já colocamos em prática.</h2>
-        <p>Uma amostra dos tipos de projeto que desenvolvemos. Novos cases entram aqui conforme são concluídos.</p>
+        <h2>Conheça nossas possibilidades de projeto.</h2>
+        <p>Explore exemplos dos tipos de solução que podemos desenvolver para sua empresa.</p>
       </div>
       <div class="portfolio-filters reveal" data-portfolio-filters></div>
       <div class="portfolio-grid reveal" data-portfolio-grid></div>
-      <p class="portfolio-note">Os projetos acima estão estruturados com conteúdo placeholder. Screenshots, nomes reais de clientes e links serão adicionados conforme autorização e finalização de cada entrega.</p>
+      <p class="portfolio-note">Exemplos ilustrativos de soluções. Cases e links serão publicados conforme a conclusão dos projetos e a autorização dos clientes.</p>
     </div>
   </section>
 
@@ -211,7 +212,7 @@
       <div class="mascot-frame">
         <img
           class="mascot-img"
-          src="assets/img/iguana-note-png.png"
+          src="assets/img/iguana-note-png.png" loading="lazy"
           alt="Mascote oficial Iguana+ trabalhando"
         />
       </div>
@@ -242,7 +243,7 @@
   <section class="trust-section">
     <div class="container">
       <div class="trust-grid reveal" data-trust-grid></div>
-      <p class="trust-placeholder">Espaço reservado para logos de clientes, depoimentos, avaliações e cases de sucesso — a ser preenchido conforme novos projetos forem concluídos.</p>
+
     </div>
   </section>
 
@@ -295,6 +296,7 @@
 
       <div class="reveal">
         <form data-contact-form novalidate>
+          <input type="checkbox" name="botcheck" hidden tabindex="-1" autocomplete="off" />
           <div class="form-grid">
             <div class="field">
               <label for="f-nome">Nome</label>
@@ -411,17 +413,17 @@
 
 
 <!-- Chat flutuante -->
-<button class="chat-float" id="chat-toggle" aria-label="Abrir chat">
+<button class="chat-float" id="chat-toggle" aria-label="Abrir chat" aria-expanded="false" aria-controls="chat-widget">
   🦎
 </button>
-<div class="chat-widget" id="chat-widget" aria-hidden="true">
+<div class="chat-widget" id="chat-widget" role="dialog" aria-label="Atendimento Iguana+" aria-hidden="true" inert>
   <div class="chat-header">
     <strong>Iguana+ 🦎</strong>
     <button id="chat-close" aria-label="Fechar chat">
       ×
     </button>
   </div>
-  <div class="chat-messages" id="chat-messages"></div>
+  <div class="chat-messages" id="chat-messages" role="log" aria-live="polite"></div>
   <div class="chat-options" id="chat-options"></div>
 </div>
 <script src="js/config.js"></script>
