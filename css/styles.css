@@ -13,9 +13,11 @@
    ========================================================= */
 :root {
   /* Cor — Identidade visual oficial Iguana+ */
-  --bg: #0D1117;
-  --bg-elev: #161B22;
-  --bg-elev-2: #1C232C;
+  --bg: #0B1310;
+  --bg-elev: #12201A;
+  --bg-elev-2: #183027;
+  --bg-soft-green: #10291F;   /* Fundo verde escuro usado nas áreas com textura */
+  --bg-leaf-glow: rgba(82, 203, 59, 0.15);
 
   --brand-primary: #10B981;   /* Verde primário — destaque/ação */
   --brand-secondary: #059669; /* Verde secundário — links/acentos */
@@ -55,13 +57,48 @@ html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
-  background: var(--bg);
+  background:
+    radial-gradient(circle at 18% 8%, rgba(82, 203, 59, 0.18), transparent 28%),
+    radial-gradient(circle at 88% 18%, rgba(16, 185, 129, 0.13), transparent 26%),
+    linear-gradient(135deg, #08100D 0%, var(--bg) 44%, #0E241B 100%);
   color: var(--ink);
   font-family: var(--font-body);
   font-size: 16px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+}
+
+/* FUNDO DO SITE
+ * EDITAR AQUI: estas camadas dão cor e textura ao fundo geral.
+ * Para deixar mais discreto, reduza o opacity de body::before e body::after.
+ */
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -2;
+}
+
+body::before {
+  opacity: 0.42;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px),
+    radial-gradient(circle at 20% 20%, rgba(82, 203, 59, 0.10) 0 2px, transparent 3px),
+    radial-gradient(circle at 82% 72%, rgba(16, 185, 129, 0.10) 0 2px, transparent 3px);
+  background-size: 72px 72px, 72px 72px, 170px 170px, 210px 210px;
+}
+
+body::after {
+  opacity: 0.24;
+  background:
+    radial-gradient(ellipse at 5% 34%, rgba(82, 203, 59, 0.18), transparent 32%),
+    radial-gradient(ellipse at 96% 64%, rgba(6, 78, 59, 0.45), transparent 34%),
+    linear-gradient(120deg, transparent 0 18%, rgba(82, 203, 59, 0.05) 18% 19%, transparent 19% 54%, rgba(16, 185, 129, 0.05) 54% 55%, transparent 55%);
+  z-index: -1;
 }
 
 body.menu-open { overflow: hidden; }
@@ -89,15 +126,16 @@ button { font-family: inherit; cursor: pointer; }
   position: absolute;
   inset: 0;
   pointer-events: none;
-  opacity: 0.5;
+  opacity: 0.62;
   background-image:
-    linear-gradient(var(--line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--line) 1px, transparent 1px);
-  background-size: 64px 64px;
+    linear-gradient(rgba(82, 203, 59, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(82, 203, 59, 0.08) 1px, transparent 1px),
+    radial-gradient(circle, rgba(82, 203, 59, 0.18) 0 2px, transparent 3px);
+  background-size: 64px 64px, 64px 64px, 128px 128px;
   mask-image: radial-gradient(ellipse 60% 50% at 70% 30%, black, transparent 75%);
 }
 
-section { position: relative; }
+section { position: relative; isolation: isolate; }
 
 .eyebrow {
   display: inline-flex;
@@ -184,7 +222,7 @@ header.site-header {
 }
 header.site-header.scrolled {
   padding: 14px 0;
-  background: rgba(13, 17, 23, 0.82);
+  background: rgba(8, 18, 14, 0.84);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--line);
@@ -275,7 +313,9 @@ footer .brand-title { font-size: 1.4rem; }
 .mobile-panel {
   position: fixed;
   inset: 0;
-  background: var(--bg);
+  background:
+    radial-gradient(circle at 20% 18%, rgba(82, 203, 59, 0.16), transparent 32%),
+    linear-gradient(145deg, #08100D, #10291F);
   z-index: 99;
   display: flex;
   flex-direction: column;
@@ -404,23 +444,33 @@ footer .brand-title { font-size: 1.4rem; }
 }
 
 /* ---------- Serviços ---------- */
+.section-pad {
+  background:
+    linear-gradient(180deg, rgba(11, 19, 16, 0.28), rgba(16, 41, 31, 0.12));
+}
+
 .services-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1px;
-  background: var(--line);
+  background: rgba(82, 203, 59, 0.13);
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
   overflow: hidden;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.22);
 }
 .service-card {
-  background: var(--bg-elev);
+  background:
+    radial-gradient(circle at 85% 10%, rgba(82, 203, 59, 0.10), transparent 32%),
+    rgba(18, 32, 26, 0.88);
   padding: 34px 30px;
   transition: background 0.3s var(--ease);
   border-top: 2px solid transparent;
 }
 .service-card:hover {
-  background: var(--bg-elev-2);
+  background:
+    radial-gradient(circle at 85% 10%, rgba(82, 203, 59, 0.18), transparent 34%),
+    rgba(24, 48, 39, 0.95);
   border-top-color: var(--brand-secondary);
 }
 .service-icon {
@@ -445,7 +495,14 @@ footer .brand-title { font-size: 1.4rem; }
 }
 
 /* ---------- Diferencial ---------- */
-.diff-section { padding: 130px 0; background: var(--bg-elev); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.diff-section {
+  padding: 130px 0;
+  background:
+    radial-gradient(circle at 8% 18%, rgba(82, 203, 59, 0.14), transparent 30%),
+    linear-gradient(135deg, rgba(18, 32, 26, 0.96), rgba(8, 22, 17, 0.92));
+  border-top: 1px solid rgba(82, 203, 59, 0.11);
+  border-bottom: 1px solid rgba(82, 203, 59, 0.11);
+}
 .diff-equation {
   display: flex;
   align-items: center;
@@ -458,6 +515,9 @@ footer .brand-title { font-size: 1.4rem; }
   text-align: center;
   padding: 30px 26px;
   min-width: 160px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.025);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 .diff-item span {
   display: block;
@@ -494,7 +554,7 @@ footer .brand-title { font-size: 1.4rem; }
   font-family: var(--font-display);
   font-size: 0.9rem;
   color: var(--brand-secondary);
-  background: var(--bg);
+  background: var(--bg-soft-green);
   display: inline-block;
   padding-right: 12px;
   margin-bottom: 22px;
@@ -524,7 +584,14 @@ footer .brand-title { font-size: 1.4rem; }
 }
 
 /* ---------- Confiança ---------- */
-.trust-section { padding: 90px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.trust-section {
+  padding: 90px 0;
+  border-top: 1px solid rgba(82, 203, 59, 0.10);
+  border-bottom: 1px solid rgba(82, 203, 59, 0.10);
+  background:
+    linear-gradient(90deg, rgba(82, 203, 59, 0.08), transparent 24%, transparent 76%, rgba(16, 185, 129, 0.08)),
+    rgba(8, 18, 14, 0.44);
+}
 .trust-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -556,6 +623,9 @@ footer .brand-title { font-size: 1.4rem; }
   padding: 130px 0;
   text-align: center;
   position: relative;
+  background:
+    radial-gradient(circle at 50% 42%, rgba(82, 203, 59, 0.16), transparent 38%),
+    linear-gradient(180deg, rgba(6, 78, 59, 0.10), rgba(11, 19, 16, 0.38));
 }
 .cta-section h2 { max-width: 700px; margin: 0 auto; }
 .cta-section p { max-width: 520px; margin: 20px auto 0; font-size: 1.05rem; }
@@ -572,7 +642,9 @@ footer .brand-title { font-size: 1.4rem; }
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
   padding: 30px;
-  background: var(--bg-elev);
+  background:
+    radial-gradient(circle at 90% 0%, rgba(82, 203, 59, 0.09), transparent 35%),
+    rgba(18, 32, 26, 0.84);
   margin-bottom: 16px;
 }
 .contact-info-card h3 { margin-bottom: 8px; font-size: 1.05rem; }
@@ -598,7 +670,7 @@ footer .brand-title { font-size: 1.4rem; }
 .field { display: flex; flex-direction: column; gap: 8px; }
 .field label { font-size: 0.85rem; color: var(--muted); }
 .field input, .field select, .field textarea {
-  background: var(--bg-elev);
+  background: rgba(18, 32, 26, 0.86);
   border: 1px solid var(--line-strong);
   border-radius: var(--radius-sm);
   padding: 13px 14px;
@@ -634,6 +706,9 @@ footer .brand-title { font-size: 1.4rem; }
 footer.site-footer {
   border-top: 1px solid var(--line);
   padding: 70px 0 30px;
+  background:
+    radial-gradient(circle at 12% 100%, rgba(82, 203, 59, 0.10), transparent 26%),
+    linear-gradient(180deg, rgba(11, 19, 16, 0.18), rgba(7, 12, 10, 0.92));
 }
 .footer-grid {
   display: grid;
@@ -751,7 +826,9 @@ footer.site-footer {
   max-width: calc(100vw - 40px);
   height: 460px;
   max-height: calc(100vh - 160px);
-  background: var(--bg-elev);
+  background:
+    radial-gradient(circle at 100% 0%, rgba(82, 203, 59, 0.10), transparent 36%),
+    var(--bg-elev);
   border: 1px solid var(--line-strong);
   border-radius: var(--radius-md);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);

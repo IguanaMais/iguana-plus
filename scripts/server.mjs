@@ -3,7 +3,9 @@ import { readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve, extname, sep } from 'node:path';
 
-const root = dirname(fileURLToPath(import.meta.url));
+// O servidor fica em scripts/, mas os arquivos públicos estão na raiz do projeto.
+// Para iniciar, execute npm start na pasta que contém package.json.
+const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const port = Number(process.env.PORT || 8765);
 const types = {'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.json':'application/json; charset=utf-8','.png':'image/png','.jpg':'image/jpeg','.svg':'image/svg+xml','.webp':'image/webp'};
 const server = http.createServer(async (req, res) => {

@@ -1,0 +1,12 @@
+# Dependências e arquivos temporários locais
+node_modules/
+*.log
+
+# Cópias antigas ficam somente no computador
+backups/
+*.bak
+
+# Configurações privadas de ambiente
+.env
+.env.*
+!.env.example
