@@ -2,11 +2,21 @@
  * IGUANA+ — Dados de conteúdo
  * -------------------------------------------------
  * Portfólio: adicione novos projetos incluindo um novo
- * objeto no array abaixo. O grid se ajusta automaticamente.
+ * objeto no array abaixo. O carrossel se ajusta automaticamente.
  * Substitua "image" por um caminho real quando tiver o
- * mockup/screenshot do projeto.
+ * mockup/screenshot do projeto. Apenas itens com imagem aparecem.
  */
 
+/* EDITAR: FOTOS DO PORTFÓLIO
+ * 1. Salve sua foto em assets/img/ (prefira nomes sem espaços ou acentos).
+ * 2. Copie este exemplo para dentro da lista abaixo, separando objetos com vírgula:
+ *    { id: "meu-projeto", title: "Nome do projeto",
+ *      image: "assets/img/minha-foto.jpg", link: "https://endereco-do-projeto.com" },
+ * 3. Use image: null para ocultar um item; link: "#" para foto sem link externo.
+ * A ordem da lista é a ordem das fotos. title é usado para acessibilidade.
+ * category e description são dados opcionais; não aparecem sobre as imagens.
+ * Com uma foto, os controles ficam ocultos. A partir de duas, surgem automaticamente.
+ */
 window.IGUANA_PROJECTS = [
   {
     id: "projeto-01",
@@ -64,6 +74,7 @@ window.IGUANA_PROJECTS = [
   },
 ];
 
+// EDITAR: títulos, descrições e ícones dos cartões de Serviços. Ícones disponíveis em js/main.js > ICONS.
 window.IGUANA_SERVICES = [
   {
     icon: "code",
@@ -109,6 +120,7 @@ window.IGUANA_SERVICES = [
   },
 ];
 
+// EDITAR: números, títulos e textos da seção "Da ideia à solução".
 window.IGUANA_PROCESS = [
   {
     number: "01",

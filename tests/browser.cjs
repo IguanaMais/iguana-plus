@@ -10,20 +10,12 @@ const fs = require('node:fs');
  await page.goto('http://127.0.0.1:8765');
  await page.locator('.service-card').first().waitFor();
  assert.equal(await page.locator('.service-card').count(),6);
- assert.equal(await page.locator('.project-card').count(),6);
+ assert.equal(await page.locator('.portfolio-slide').count(),1);
  assert.equal(await page.locator('a[href="#"]').count(),0);
  for(const network of ['instagram','linkedin']){
   const urls=await page.locator(`[data-${network}]`).evaluateAll(es=>es.map(e=>e.href));
   assert.equal(urls.length,2); assert.equal(urls[0],urls[1]);
  }
- for(const filter of await page.locator('.filter-btn').all()){
-  await filter.click();
-  assert.equal(await filter.getAttribute('aria-pressed'),'true');
-  const category=await filter.textContent();
-  const expected=await page.evaluate(c=>window.IGUANA_PROJECTS.filter(p=>c==='Todos'||p.category===c).length,category);
-  assert.equal(await page.locator('.project-card').count(),expected);
- }
- await page.getByRole('button',{name:'Todos',exact:true}).click();
  await page.locator('#chat-toggle').click();
  await page.getByRole('button',{name:'💻 Desenvolvimento de sites',exact:true}).click();
  await page.getByRole('button',{name:'Quero saber mais',exact:true}).click();
@@ -96,6 +88,6 @@ const fs = require('node:fs');
  await page.getByRole('button',{name:'💻 Desenvolvimento de sites',exact:true}).waitFor();
  assert.equal(errors.length,0,errors.join('\n'));
  assert.equal(missing.filter(u=>!u.endsWith('/chat.json')).length,0,missing.join('\n'));
- console.log('PASS: render, local assets, social links, all filters, chat navigation/fallback/retry, form validation/success/API errors/network error/duplicate prevention, keyboard menu, responsive 320–1440px.');
+ console.log('PASS: render, local assets, social links, portfolio, chat navigation/fallback/retry, form validation/success/API errors/network error/duplicate prevention, keyboard menu, responsive 320–1440px.');
  await browser.close();
 })().catch(e=>{console.error(e);process.exit(1)});

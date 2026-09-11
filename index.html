@@ -1,8 +1,19 @@
 <!DOCTYPE html>
+<!--
+  MAPA DE EDIÇÃO — use Ctrl+F e procure "EDITAR:" ou o nome da seção.
+  Neste HTML: títulos, textos fixos, imagens das mascotes e estrutura das seções.
+  js/data.js: fotos do portfólio, serviços e etapas do processo.
+  js/config.js: WhatsApp, e-mail, redes sociais e estatísticas.
+  assets/data/chat.json: assuntos, respostas e caminhos do chat.
+  css/styles.css: cores, tamanhos, espaçamentos, celular e animações CSS.
+  js/portfolio.js: comportamento do carrossel; js/motion.js: animações de entrada.
+  Guia completo e exemplo para adicionar fotos: README.md.
+-->
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!-- EDITAR: título da aba, descrição para buscas e endereço oficial do site. -->
 <title>Iguana+ | Tecnologia, Desenvolvimento Web e Consultoria</title>
 <meta name="description" content="A Iguana+ desenvolve sites, chatbots e soluções digitais, além de oferecer consultoria empresarial, financeira, análise de mercado, precificação e estratégia." />
 <meta name="robots" content="index, follow" />
@@ -15,6 +26,7 @@
 <meta property="og:image" content="https://www.iguanaplus.com.br/assets/img/logo.png" />
 <meta property="og:locale" content="pt_BR" />
 
+<!-- EDITAR: ícones da aba e do atalho no celular nos três caminhos abaixo. -->
 <!-- Ícone Iguana+ com versão própria para a aba do navegador -->
 <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-iguana-v2.png" />
 <link rel="icon" type="image/png" sizes="192x192" href="assets/img/iguana-mark-v2.png" />
@@ -45,6 +57,7 @@
 <noscript><p>Ative o JavaScript para usar o portfólio, o formulário e o chat. Contato: <a href="mailto:iguana.empresarial@gmail.com">iguana.empresarial@gmail.com</a>.</p><style>.reveal { opacity:1; transform:none; }</style></noscript>
 
 <!-- =================== HEADER =================== -->
+<!-- EDITAR: logotipo e links do menu. Ao alterar um link, atualize também o menu mobile. Os href="#..." apontam para os id das seções. -->
 <header class="site-header">
   <div class="container nav-row">
     <a href="#inicio" class="logo" aria-label="Iguana+ Soluções — página inicial">
@@ -95,6 +108,7 @@
 <main id="conteudo" tabindex="-1">
 
   <!-- =================== HERO =================== -->
+  <!-- EDITAR: chamada principal, texto de apresentação e botões; a mascote está em .hero-visual. -->
   <section class="hero" id="inicio">
     <div class="circuit-field" aria-hidden="true"></div>
     <div class="container hero-grid">
@@ -159,6 +173,7 @@
         <h2>Soluções para empresas que querem evoluir.</h2>
         <p>Unimos tecnologia e estratégia para resolver problemas reais de negócio — não entregamos apenas ferramentas soltas, entregamos caminhos claros de crescimento.</p>
       </div>
+      <!-- EDITAR: os cartões são gerados por js/main.js a partir de IGUANA_SERVICES em js/data.js. -->
       <div class="services-grid reveal" data-services-grid></div>
     </div>
   </section>
@@ -183,15 +198,21 @@
   </section>
 
   <!-- =================== PORTFÓLIO =================== -->
+  <!-- EDITAR: título abaixo. Fotos em js/data.js > IGUANA_PROJECTS; adicione image para aparecer. Não é necessário duplicar slides neste HTML. -->
   <section class="section-pad" id="portfolio">
     <div class="container">
-      <div class="section-head reveal">
-        <h2>Conheça nossas possibilidades de projeto.</h2>
-        <p>Explore exemplos dos tipos de solução que podemos desenvolver para sua empresa.</p>
+      <div class="section-head reveal portfolio-heading">
+        <h2 id="portfolio-title">Portfólio</h2>
       </div>
-      <div class="portfolio-filters reveal" data-portfolio-filters></div>
-      <div class="portfolio-grid reveal" data-portfolio-grid></div>
-      <p class="portfolio-note">Exemplos ilustrativos de soluções. Cases e links serão publicados conforme a conclusão dos projetos e a autorização dos clientes.</p>
+      <div class="portfolio-carousel reveal" data-carousel role="region" aria-roledescription="carrossel" aria-labelledby="portfolio-title">
+        <div class="portfolio-track" data-carousel-track tabindex="0" aria-label="Projetos; use as setas do teclado para navegar"></div>
+        <div class="portfolio-controls" data-carousel-controls hidden>
+          <button type="button" class="portfolio-arrow" data-carousel-prev aria-label="Projeto anterior">←</button>
+          <div class="portfolio-dots" data-carousel-dots></div>
+          <button type="button" class="portfolio-arrow" data-carousel-next aria-label="Próximo projeto">→</button>
+        </div>
+        <p class="sr-only" data-carousel-status role="status" aria-live="polite"></p>
+      </div>
     </div>
   </section>
 
@@ -207,6 +228,7 @@
   </section>
 
   <!-- =================== SOBRE =================== -->
+  <!-- EDITAR: texto sobre a empresa e src da iguana no notebook abaixo. Preserve width/height para evitar saltos no carregamento. -->
 <section class="about-section" id="sobre">
   <div class="container about-grid">
 
@@ -214,7 +236,7 @@
       <div class="mascot-frame">
         <img
           class="mascot-img"
-          src="assets/img/iguana-note-png.png" loading="lazy"
+          src="assets/img/iguana-notebook-v2.webp" width="720" height="720" loading="lazy" decoding="async"
           alt="Mascote oficial Iguana+ trabalhando"
         />
       </div>
@@ -244,6 +266,7 @@
   <!-- =================== CONFIANÇA =================== -->
   <section class="trust-section">
     <div class="container">
+      <!-- EDITAR: números e descrições em js/config.js > stats. -->
       <div class="trust-grid reveal" data-trust-grid></div>
 
     </div>
@@ -262,6 +285,7 @@
   </section>
 
   <!-- =================== CONTATO =================== -->
+  <!-- EDITAR: textos e opções do formulário aqui; contatos em js/config.js. Preserve name, id e data-* dos campos usados pelo JavaScript. -->
   <section class="section-pad" id="contato">
     <div class="container contact-grid">
       <div class="reveal">
@@ -408,13 +432,14 @@
   <div class="container footer-bottom">
     <span>© <span data-year></span> Iguana+. Todos os direitos reservados.</span>
     <span>Feito com tecnologia e estratégia.</span>
+    <button type="button" class="motion-toggle" data-motion-toggle aria-pressed="false">Pausar animações</button>
   </div>
 </footer>
 
-<!-- restante do seu site -->
+<!-- EDITAR: o rodapé acima contém o botão para pausar os movimentos; controle em js/motion.js. -->
 
 
-<!-- Chat flutuante -->
+<!-- Chat flutuante: EDITAR o conteúdo em assets/data/chat.json. Este bloco define só a aparência/estrutura. -->
 <button class="chat-float" id="chat-toggle" aria-label="Abrir chat" aria-expanded="false" aria-controls="chat-widget">
   <img src="assets/img/iguana-mark-v2.png" alt="" width="40" height="40" />
 </button>
@@ -428,8 +453,11 @@
   <div class="chat-messages" id="chat-messages" role="log" aria-live="polite"></div>
   <div class="chat-options" id="chat-options"></div>
 </div>
+<!-- Ordem necessária: configurações e dados primeiro; renderização e interações depois. -->
 <script src="js/config.js"></script>
 <script src="js/data.js"></script>
 <script src="js/main.js"></script>
+<script src="js/portfolio.js"></script>
+<script src="js/motion.js"></script>
 </body>
 </html>

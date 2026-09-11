@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "start": "node server.mjs",
-    "check": "node --check server.mjs && node --check js/config.js && node --check js/data.js && node --check js/main.js",
-    "test:browser": "node tests/browser.cjs"
+    "check": "node --check server.mjs && node --check js/config.js && node --check js/data.js && node --check js/main.js && node --check js/motion.js && node --check js/portfolio.js",
+    "test:browser": "node tests/browser.cjs",
+    "test:motion": "node tests/motion.cjs",
+    "test:portfolio": "node tests/portfolio.cjs"
   }
 }

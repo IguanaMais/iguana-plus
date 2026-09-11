@@ -1,3 +1,9 @@
+/* MAPA DE EDIÇÃO — INTERAÇÕES GERAIS
+ * Conteúdo: js/data.js e js/config.js. Este arquivo conecta esses dados ao HTML.
+ * Procure os blocos: Mobile menu, Serviços, Formulário de contato e Chat Iguana+.
+ * Validação/envio: bloco "Formulário de contato"; atendimento: assets/data/chat.json.
+ * Carrossel e animações ficam em js/portfolio.js e js/motion.js.
+ */
 (function () {
   "use strict";
 
@@ -211,113 +217,6 @@
       .join("");
   }
 
-  /* ---------------- Portfólio ---------------- */
-
-  var portfolioGrid = document.querySelector(
-    "[data-portfolio-grid]"
-  );
-
-  var projects = Array.isArray(window.IGUANA_PROJECTS)
-    ? window.IGUANA_PROJECTS
-    : [];
-
-  var categories = ["Todos"].concat(
-    Array.from(
-      new Set(
-        projects.map(function (p) {
-          return p.category;
-        })
-      )
-    )
-  );
-
-  var filtersEl = document.querySelector(
-    "[data-portfolio-filters]"
-  );
-
-  function renderProjects(filter) {
-    if (!portfolioGrid) return;
-
-    var list = projects.filter(function (p) {
-      return filter === "Todos" || p.category === filter;
-    });
-
-    portfolioGrid.innerHTML = list
-      .map(function (p) {
-        return (
-          '<article class="project-card">' +
-          '<div class="project-thumb">' +
-          (p.image
-            ? '<img src="' +
-              p.image +
-              '" loading="lazy" alt="Prévia do projeto ' +
-              p.title +
-              '">'
-            : svgIcon("grid", 40) +
-              '<span style="position:absolute;bottom:12px;left:12px;">' +
-              "Exemplo ilustrativo" +
-              "</span>") +
-          "</div>" +
-          '<div class="project-body">' +
-          '<span class="project-category">' +
-          p.category +
-          "</span>" +
-          "<h3>" +
-          p.title +
-          "</h3>" +
-          "<p>" +
-          p.description +
-          "</p>" +
-          (p.link && p.link !== "#"
-            ? '<a class="project-link" href="' + p.link + '">Ver projeto ' + svgIcon("arrow", 15) + '</a>'
-            : '<span class="project-pending">Exemplo ilustrativo</span>') +
-          "</div>" +
-          "</article>"
-        );
-      })
-      .join("");
-  }
-
-  if (filtersEl) {
-    filtersEl.innerHTML = categories
-      .map(function (c, i) {
-        return (
-          '<button type="button" class="filter-btn' +
-          (i === 0 ? " active" : "") +
-          '" aria-pressed="' + (i === 0 ? 'true' : 'false') + '" data-filter="' +
-          c +
-          '">' +
-          c +
-          "</button>"
-        );
-      })
-      .join("");
-
-    filtersEl.addEventListener("click", function (e) {
-      var btn = e.target.closest(".filter-btn");
-
-      if (!btn) return;
-
-      filtersEl
-        .querySelectorAll(".filter-btn")
-        .forEach(function (b) {
-          b.classList.remove("active");
-          b.setAttribute("aria-pressed", "false");
-        });
-
-      btn.classList.add("active");
-      btn.setAttribute("aria-pressed", "true");
-
-      renderProjects(
-        btn.getAttribute("data-filter")
-      );
-    });
-  }
-
-  if (portfolioGrid) {
-    renderProjects("Todos");
-  }
-
   /* ---------------- Como funciona ---------------- */
 
   var processEl = document.querySelector(
@@ -372,38 +271,6 @@
         );
       })
       .join("");
-  }
-
-  /* ---------------- Scroll reveal ---------------- */
-
-  var revealTargets =
-    document.querySelectorAll(".reveal");
-
-  if ("IntersectionObserver" in window) {
-    var io = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add(
-              "is-visible"
-            );
-
-            io.unobserve(entry.target);
-          }
-        });
-      },
-      {
-        threshold: 0
-      }
-    );
-
-    revealTargets.forEach(function (t) {
-      io.observe(t);
-    });
-  } else {
-    revealTargets.forEach(function (t) {
-      t.classList.add("is-visible");
-    });
   }
 
   /* ---------------- Formulário de contato ---------------- */
@@ -635,8 +502,7 @@
 
 
   /* ---------------- Chat Iguana+ ---------------- */
-
-    /* ---------------- Chat Iguana+ ---------------- */
+  // EDITAR: mensagens no JSON, mantendo inicio e os destinos válidos. JSON não aceita comentários.
 
   var chatToggle = document.getElementById("chat-toggle");
   var chatWidget = document.getElementById("chat-widget");

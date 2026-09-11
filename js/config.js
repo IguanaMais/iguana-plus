@@ -10,11 +10,13 @@ window.IGUANA_CONFIG = {
   // Apenas dígitos, com código do país. Ex: 55 + DDD + número.
   whatsappNumber: "5511934363816",
 
+  // EDITAR: mensagem pré-preenchida em cada botão do WhatsApp.
   whatsappMessages: {
     default: "Olá! Conheci a Iguana+ pelo site e gostaria de saber mais sobre os serviços.",
     contato: "Olá! Vim pelo site da Iguana+ e quero conversar sobre um projeto.",
   },
 
+  // EDITAR: chave pública do Web3Forms que direciona os envios do formulário.
   formAccessKey: "7af392f3-6fda-4b4b-815b-b3d239cba9e5",
 
   email: "iguana.empresarial@gmail.com",

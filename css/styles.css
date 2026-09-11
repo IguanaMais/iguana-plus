@@ -1,3 +1,13 @@
+/* MAPA DE EDIÇÃO — ESTILOS (Ctrl+F pelos nomes abaixo)
+ * CORES / FONTES / LARGURA: :root no início do arquivo.
+ * TOPO / LOGO: Header e .brand-icon; apresentação: Hero.
+ * CONTEÚDO: Serviços, Diferencial, Como funciona, Sobre, Contato e Footer.
+ * FOTOS DO PORTFÓLIO: "Galeria com imagem central e prévias laterais", perto do fim.
+ * ANIMAÇÕES: "Movimento discreto" e @keyframes iguana-float, perto do fim.
+ * CELULAR: regras @media (max-width: ...), junto dos respectivos blocos.
+ * As regras finais refinam as anteriores: procure todas as ocorrências de uma classe
+ * antes de mudar uma propriedade. Conteúdo/textos não são editados neste arquivo.
+ */
 /* =========================================================
    IGUANA+ — Design tokens
    ========================================================= */
@@ -463,89 +473,6 @@ footer .brand-title { font-size: 1.4rem; }
 }
 .diff-result span { color: var(--brand-primary); }
 
-/* ---------- Portfólio ---------- */
-.portfolio-filters {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-bottom: 40px;
-}
-.filter-btn {
-  padding: 9px 18px;
-  border-radius: 999px;
-  border: 1px solid var(--line-strong);
-  background: transparent;
-  color: var(--muted);
-  font-size: 0.875rem;
-  transition: all 0.25s var(--ease);
-}
-.filter-btn:hover { color: var(--ink); border-color: var(--ink); }
-.filter-btn.active { background: var(--brand-primary); color: #0D1117; border-color: var(--brand-primary); }
-
-.portfolio-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-}
-.project-card {
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  background: var(--bg-elev);
-  transition: border-color 0.3s var(--ease), transform 0.3s var(--ease);
-}
-
-.project-card:hover { border-color: var(--line-strong); transform: translateY(-4px); }
-.project-thumb {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  background: var(--bg-elev-2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--muted-2);
-  font-size: 0.8rem;
-  border-bottom: 1px solid var(--line);
-  position: relative;
-  overflow: hidden; /* Corta o excesso da imagem */
-}
-/* Regra nova para formatar a imagem dentro do thumb */
-.project-thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* Preenche a área sem distorcer */
-  object-position: top; /* Foca no topo do site da barbearia */
-}
-
-.project-body h3 { margin-bottom: 10px; }
-.project-body p { font-size: 0.925rem; margin-bottom: 18px; }
-.project-link {
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--ink);
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  transition: gap 0.25s var(--ease), color .25s var(--ease);
-}
-.project-link:hover { gap: 10px; color: var(--brand-secondary); }
-.project-link svg { width: 15px; height: 15px; }
-
-.portfolio-note {
-  margin-top: 36px;
-  font-size: 0.875rem;
-  color: var(--muted-2);
-  border-left: 2px solid var(--line-strong);
-  padding-left: 14px;
-}
-
-@media (max-width: 980px) {
-  .portfolio-grid { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 640px) {
-  .portfolio-grid { grid-template-columns: 1fr; }
-}
-
 /* ---------- Como funciona ---------- */
 .process-line {
   position: relative;
@@ -760,12 +687,7 @@ footer.site-footer {
 .whatsapp-float svg { width: 27px; height: 27px; }
 
 /* ---------- Utilidades de revelação ao rolar ---------- */
-.reveal {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
-}
-.reveal.is-visible { opacity: 1; transform: translateY(0); }
+.reveal { opacity: 1; }
 
 .section-pad { padding: 130px 0; }
 @media (max-width: 700px) {
@@ -985,3 +907,112 @@ body.menu-open .chat-float { visibility: hidden; }
 .hero-visual-bg { position: absolute; inset: 0; height: 100%; }
 .hero-visual .mascot-img { width: 100%; height: 100%; filter: drop-shadow(0 12px 24px rgba(16, 185, 129, .12)); }
 .chat-float img { width: 70%; height: 70%; object-fit: contain; pointer-events: none; }
+
+/* Movimento discreto, sem prender ou substituir a rolagem nativa. */
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -8px;
+  height: 2px;
+  background: var(--brand-primary);
+  border-radius: 2px;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .25s ease;
+}
+.nav-links a[aria-current="location"] { color: var(--ink); }
+.nav-links a[aria-current="location"]::after,
+.nav-links a:hover::after { transform: scaleX(1); }
+.mobile-panel a[aria-current="location"] { color: var(--brand-primary); }
+
+/* Galeria com imagem central e prévias laterais. */
+.portfolio-heading { max-width: none; text-align: center; margin-bottom: 28px; }
+.portfolio-heading h2 { margin-inline: auto; }
+.portfolio-carousel { margin-inline: calc(-1 * var(--gutter)); }
+/* EDITAR: padding lateral controla quanto das fotos vizinhas aparece; gap separa os slides. */
+.portfolio-track {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 24px 12% 36px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+}
+.portfolio-track::-webkit-scrollbar { display: none; }
+/* EDITAR: aspect-ratio define o formato; scale(.9) reduz as prévias laterais. */
+.portfolio-slide {
+  flex: 0 0 100%;
+  min-width: 0;
+  aspect-ratio: 16 / 10;
+  scroll-snap-align: center;
+  background: var(--bg-elev);
+  border: 1px solid var(--line-strong);
+  border-radius: 18px;
+  overflow: hidden;
+  opacity: .42;
+  transform: scale(.9);
+  transition: transform .65s var(--ease), opacity .65s ease, box-shadow .65s ease;
+  cursor: pointer;
+}
+.portfolio-slide.is-active { opacity: 1; transform: scale(1); box-shadow: 0 16px 38px rgba(0,0,0,.3); cursor: default; }
+.portfolio-slide img, .portfolio-slide > a { display: block; width: 100%; height: 100%; }
+/* contain mostra a foto inteira; cover preenche a moldura, mas recorta as bordas. */
+.portfolio-slide img { object-fit: contain; }
+.portfolio-slide > a:focus-visible { outline-offset: -4px; }
+.portfolio-track.is-single { overflow-x: hidden; }
+.portfolio-controls { display: flex; align-items: center; justify-content: center; gap: 24px; padding: 0 var(--gutter); }
+.portfolio-arrow { flex-shrink: 0; width: 46px; height: 46px; border: 1px solid var(--line-strong); border-radius: 50%; background: var(--bg-elev); color: var(--ink); font-size: 1.3rem; transition: background .25s, transform .25s; }
+.portfolio-arrow:hover:not(:disabled) { background: var(--brand-dark); transform: scale(1.06); }
+.portfolio-arrow:disabled { opacity: .3; cursor: default; }
+.portfolio-dots { display: flex; justify-content: center; flex-wrap: wrap; gap: 2px; }
+.portfolio-dot { padding: 10px 7px; background: none; border: 0; }
+.portfolio-dot::after { content: ""; display: block; width: 7px; height: 7px; border-radius: 5px; background: var(--line-strong); transition: width .35s, background .35s; }
+.portfolio-dot[aria-pressed="true"]::after { width: 25px; background: var(--brand-primary); }
+.portfolio-empty { padding: 40px; text-align: center; margin: auto; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.motion-toggle { color: var(--muted); border: 1px solid var(--line-strong); background: transparent; border-radius: 6px; padding: 5px 10px; font-size: .75rem; }
+/* EDITAR: -9px é a altura do movimento; 6s na regra seguinte é a velocidade do ciclo. */
+@keyframes iguana-float { 0%, 100% { translate: 0 0; } 50% { translate: 0 -9px; } }
+@media (prefers-reduced-motion: no-preference) {
+  .hero-visual .mascot-img, .about-visual .mascot-img { animation: iguana-float 6s ease-in-out infinite; animation-play-state: paused; }
+  .mascot-in-view .mascot-img { animation-play-state: running; }
+}
+.motion-paused .mascot-img { animation-play-state: paused !important; }
+.motion-paused { scroll-behavior: auto; }
+.motion-paused .portfolio-track { scroll-behavior: auto; }
+.motion-paused .portfolio-slide { transition: none; }
+@media (max-width: 640px) {
+  .portfolio-track { gap: 10px; padding: 14px 9% 24px; }
+  .portfolio-slide { border-radius: 10px; }
+  .portfolio-controls { gap: 12px; }
+}
+.btn { transition: transform .22s ease, background .22s ease, border-color .22s ease, box-shadow .22s ease; }
+.service-card { transition: background .25s ease, border-color .25s ease; }
+.service-icon { transition: transform .3s var(--ease); }
+.mascot-img { transition: transform .65s var(--ease); }
+.about-visual .mascot-img { filter: drop-shadow(0 12px 24px rgba(16, 185, 129, .12)); }
+.mobile-panel { transition-duration: .32s; }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .btn:hover { transform: translateY(-2px); }
+  .btn:active { transform: translateY(0); }
+  .service-card:hover .service-icon { transform: translateY(-3px) rotate(-4deg); }
+  .hero-visual:hover .mascot-img,
+  .about-visual:hover .mascot-img { transform: translateY(-5px) rotate(-1deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-delay: 0s !important;
+    transition-delay: 0s !important;
+  }
+  .hero-title .word, .hero-sub, .hero-actions, .hero-visual {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
