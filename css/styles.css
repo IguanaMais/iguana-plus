@@ -979,3 +979,9 @@ body.menu-open .chat-float { visibility: hidden; }
   .hero-actions .btn { width: 100%; text-align: center; }
   .chat-widget { max-height: calc(100dvh - 112px); }
 }
+
+/* Mascote com proporção quadrada e acabamento discreto. */
+.hero-visual { aspect-ratio: 1 / 1; }
+.hero-visual-bg { position: absolute; inset: 0; height: 100%; }
+.hero-visual .mascot-img { width: 100%; height: 100%; filter: drop-shadow(0 12px 24px rgba(16, 185, 129, .12)); }
+.chat-float img { width: 70%; height: 70%; object-fit: contain; pointer-events: none; }
