@@ -10,7 +10,7 @@ const fs = require('node:fs');
  await page.goto('http://127.0.0.1:8765');
  await page.locator('.service-card').first().waitFor();
  assert.equal(await page.locator('.service-card').count(),6);
- assert.equal(await page.locator('.portfolio-slide').count(),1);
+ assert.ok(await page.locator('.portfolio-slide').count() >= 1);
  assert.equal(await page.locator('a[href="#"]').count(),0);
  for(const network of ['instagram','linkedin']){
   const urls=await page.locator(`[data-${network}]`).evaluateAll(es=>es.map(e=>e.href));

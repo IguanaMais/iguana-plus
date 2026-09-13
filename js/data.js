@@ -23,8 +23,8 @@ window.IGUANA_PROJECTS = [
     title: "Site Institucional — Exemplo ilustrativo",
     category: "Desenvolvimento Web",
     description:
-      "Desenvolvimento de site institucional responsivo com foco em apresentação da marca e geração de contatos.",
-    image: null, // placeholder — inserir screenshot/mockup real
+      "Desenvolvimento de site para barbearia.",
+    image: "assets/img/folder_barbearia.jpg", // placeholder — inserir screenshot/mockup real
     link: "#",
   },
   {
@@ -32,8 +32,8 @@ window.IGUANA_PROJECTS = [
   title: "Landing Page — Exemplo ilustrativo",
   category: "Landing Pages",
   description:
-    "Página de conversão criada para campanha de lançamento, com formulário integrado e foco em performance.",
-  image: "assets/img/folder_barbearia.jpg",
+    "Página desenvolvida para clinica dentista.",
+  image: "assets/img/folder_dentsta.png",
   link: "#",
   },
   {
@@ -42,7 +42,7 @@ window.IGUANA_PROJECTS = [
     category: "Sistemas",
     description:
       "Sistema web sob medida para organizar processos internos e centralizar informações da operação.",
-    image: null,
+    image: "assets/img/folder_restaurante.png",
     link: "#",
   },
   {

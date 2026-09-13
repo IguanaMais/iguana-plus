@@ -1,8 +1,8 @@
 /* MAPA DE EDIÇÃO — CARROSSEL
  * Para adicionar fotos, edite IGUANA_PROJECTS em js/data.js (não este arquivo).
- * Layout/tamanho/prévias laterais: css/styles.css > "Galeria com imagem central".
- * select(): destaque, indicadores e disponibilidade das setas.
- * go(): centralização suave; eventos abaixo: botões, teclado, toque/rolagem e resize.
+ * Layout/tamanho/blur das imagens: css/styles.css > "Carrossel com imagem em foco".
+ * select(): define imagem principal, imagens laterais e indicadores.
+ * go(): troca o projeto ao clicar nos botões, nas bolinhas ou nas imagens laterais.
  * O carrossel não avança sozinho e respeita a preferência de movimento reduzido.
  */
 (function () {
@@ -76,23 +76,25 @@
   function select(index) {
     active = index;
     slides.forEach(function (slide, i) {
-      slide.classList.toggle("is-active", i === index);
+      var offset = i - index;
+      slide.classList.toggle("is-active", offset === 0);
+      slide.classList.toggle("is-prev", offset === -1);
+      slide.classList.toggle("is-next", offset === 1);
+      slide.classList.toggle("is-far-prev", offset < -1);
+      slide.classList.toggle("is-far-next", offset > 1);
+      slide.hidden = Math.abs(offset) > 2;
       var link = slide.querySelector("a");
       if (link) link.tabIndex = i === index ? 0 : -1;
       indicators[i].setAttribute("aria-pressed", String(i === index));
     });
-    previous.disabled = index === 0;
-    next.disabled = index === projects.length - 1;
+    previous.disabled = projects.length < 2 || index === 0;
+    next.disabled = projects.length < 2 || index === projects.length - 1;
     status.textContent = "Projeto " + (index + 1) + " de " + projects.length + ": " + (projects[index].title || "Iguana+");
   }
   function go(index, instant) {
     index = Math.max(0, Math.min(projects.length - 1, index));
-    var slide = slides[index];
     select(index);
-    track.scrollTo({
-      left: slide.offsetLeft - track.clientWidth / 2 + slide.offsetWidth / 2,
-      behavior: instant || reduced.matches || document.documentElement.classList.contains("motion-paused") ? "instant" : "smooth"
-    });
+    track.dataset.instant = instant || reduced.matches || document.documentElement.classList.contains("motion-paused") ? "true" : "false";
   }
   previous.addEventListener("click", function () { go(active - 1); });
   next.addEventListener("click", function () { go(active + 1); });
@@ -106,18 +108,13 @@
     event.preventDefault();
     go(index);
   });
-  var timer;
-  track.addEventListener("scroll", function () {
-    clearTimeout(timer);
-    timer = setTimeout(function () {
-      var center = track.scrollLeft + track.clientWidth / 2;
-      var nearest = 0;
-      slides.forEach(function (slide, index) {
-        if (Math.abs(slide.offsetLeft + slide.offsetWidth / 2 - center) < Math.abs(slides[nearest].offsetLeft + slides[nearest].offsetWidth / 2 - center)) nearest = index;
-      });
-      select(nearest);
-    }, 120);
-  }, { passive: true });
+  track.addEventListener("click", function (event) {
+    if (projects.length < 2) return;
+    var activeSlide = slides[active];
+    var bounds = activeSlide.getBoundingClientRect();
+    if (event.clientX < bounds.left && active > 0) go(active - 1);
+    if (event.clientX > bounds.right && active < projects.length - 1) go(active + 1);
+  });
   window.addEventListener("resize", function () { go(active, true); });
   select(0);
 })();

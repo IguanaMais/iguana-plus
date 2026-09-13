@@ -1004,43 +1004,83 @@ body.menu-open .chat-float { visibility: hidden; }
 .nav-links a:hover::after { transform: scaleX(1); }
 .mobile-panel a[aria-current="location"] { color: var(--brand-primary); }
 
-/* Galeria com imagem central e prévias laterais. */
+/* Carrossel com imagem em foco.
+ * EDITAR AQUI: --portfolio-size muda o tamanho da imagem principal.
+ * Blur/opacidade das imagens de trás ficam em .portfolio-slide:not(.is-active).
+ */
 .portfolio-heading { max-width: none; text-align: center; margin-bottom: 28px; }
 .portfolio-heading h2 { margin-inline: auto; }
-.portfolio-carousel { margin-inline: calc(-1 * var(--gutter)); }
-/* EDITAR: padding lateral controla quanto das fotos vizinhas aparece; gap separa os slides. */
+.portfolio-carousel {
+  --portfolio-size: min(700px, 72vw);
+  margin-inline: calc(-1 * var(--gutter));
+  overflow: hidden;
+}
 .portfolio-track {
   position: relative;
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  padding: 24px 12% 36px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  scrollbar-width: none;
-  overscroll-behavior-x: contain;
+  display: grid;
+  place-items: center;
+  min-height: clamp(260px, 47vw, 520px);
+  padding: 28px var(--gutter) 42px;
+  overflow: visible;
 }
 .portfolio-track::-webkit-scrollbar { display: none; }
-/* EDITAR: aspect-ratio define o formato; scale(.9) reduz as prévias laterais. */
+/* EDITAR: aspect-ratio define o formato da moldura do portfólio.
+ * 16 / 9 deixa cara de tela de site. A imagem usa cover para preencher tudo.
+ */
 .portfolio-slide {
-  flex: 0 0 100%;
+  position: absolute;
+  width: var(--portfolio-size);
   min-width: 0;
-  aspect-ratio: 16 / 10;
-  scroll-snap-align: center;
-  background: var(--bg-elev);
-  border: 1px solid var(--line-strong);
-  border-radius: 18px;
+  aspect-ratio: 16 / 9;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(82, 203, 59, 0.10), transparent 34%),
+    var(--bg-elev);
+  border: 1px solid rgba(82, 203, 59, 0.20);
+  border-radius: 22px;
   overflow: hidden;
-  opacity: .42;
-  transform: scale(.9);
-  transition: transform .65s var(--ease), opacity .65s ease, box-shadow .65s ease;
+  opacity: 0;
+  transform: translateX(0) scale(.72);
+  filter: blur(4px) saturate(.7) brightness(.72);
+  box-shadow: 0 22px 55px rgba(0,0,0,.35);
+  transition: transform .65s var(--ease), opacity .65s ease, filter .65s ease, box-shadow .65s ease;
   cursor: pointer;
+  pointer-events: none;
+  z-index: 1;
 }
-.portfolio-slide.is-active { opacity: 1; transform: scale(1); box-shadow: 0 16px 38px rgba(0,0,0,.3); cursor: default; }
+.portfolio-slide.is-active {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+  filter: none;
+  box-shadow: 0 26px 70px rgba(0,0,0,.42), 0 0 0 1px rgba(82, 203, 59, .18);
+  cursor: default;
+  pointer-events: auto;
+  z-index: 4;
+}
+.portfolio-slide.is-prev {
+  opacity: .42;
+  transform: translateX(-62%) scale(.78) rotate(-1.5deg);
+  pointer-events: auto;
+  z-index: 3;
+}
+.portfolio-slide.is-next {
+  opacity: .42;
+  transform: translateX(62%) scale(.78) rotate(1.5deg);
+  pointer-events: auto;
+  z-index: 3;
+}
+.portfolio-slide.is-far-prev {
+  opacity: .15;
+  transform: translateX(-82%) scale(.64) rotate(-3deg);
+  z-index: 2;
+}
+.portfolio-slide.is-far-next {
+  opacity: .15;
+  transform: translateX(82%) scale(.64) rotate(3deg);
+  z-index: 2;
+}
 .portfolio-slide img, .portfolio-slide > a { display: block; width: 100%; height: 100%; }
-/* contain mostra a foto inteira; cover preenche a moldura, mas recorta as bordas. */
-.portfolio-slide img { object-fit: contain; }
+/* cover preenche a moldura; object-position top mostra o início do site/case. */
+.portfolio-slide img { object-fit: cover; object-position: top center; }
 .portfolio-slide > a:focus-visible { outline-offset: -4px; }
 .portfolio-track.is-single { overflow-x: hidden; }
 .portfolio-controls { display: flex; align-items: center; justify-content: center; gap: 24px; padding: 0 var(--gutter); }
@@ -1062,11 +1102,13 @@ body.menu-open .chat-float { visibility: hidden; }
 }
 .motion-paused .mascot-img { animation-play-state: paused !important; }
 .motion-paused { scroll-behavior: auto; }
-.motion-paused .portfolio-track { scroll-behavior: auto; }
 .motion-paused .portfolio-slide { transition: none; }
 @media (max-width: 640px) {
-  .portfolio-track { gap: 10px; padding: 14px 9% 24px; }
-  .portfolio-slide { border-radius: 10px; }
+  .portfolio-carousel { --portfolio-size: min(86vw, 520px); }
+  .portfolio-track { min-height: 280px; padding: 16px var(--gutter) 28px; }
+  .portfolio-slide { border-radius: 14px; }
+  .portfolio-slide.is-prev { transform: translateX(-48%) scale(.72) rotate(-1.5deg); }
+  .portfolio-slide.is-next { transform: translateX(48%) scale(.72) rotate(1.5deg); }
   .portfolio-controls { gap: 12px; }
 }
 .btn { transition: transform .22s ease, background .22s ease, border-color .22s ease, box-shadow .22s ease; }

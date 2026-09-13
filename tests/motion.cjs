@@ -30,7 +30,7 @@ const assert = require('node:assert/strict');
       const count = await page.evaluate(() => window.motionCalls.length);
       assert.ok(reducedMotion === 'reduce' ? count === 0 : count > 0);
       await page.locator('.nav-links a[href="#portfolio"]').click();
-      assert.equal(await page.locator('.portfolio-slide').count(), 1);
+      assert.ok(await page.locator('.portfolio-slide').count() >= 1);
       await page.emulateMedia({ reducedMotion: 'reduce' });
       await page.setViewportSize({ width: 375, height: 900 });
       await page.locator('.menu-toggle').click();
